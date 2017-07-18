@@ -16,12 +16,12 @@ sha256sums=('7979c0f591125b15fd4897b40604faa76516692af717584dbcb2568299a61304')
 package_artix-grub-theme-common() {
     depends=('grub')
 
-    cd {pkgbase}-${pkgver}
+    cd ${pkgbase}-${pkgver}
     make PREFIX=/usr DESTDIR=${pkgdir} install_common
 }
 package_artix-grub-theme() {
     depends=('artix-grub-theme-common')
 
-    cd {pkgbase}-${pkgver}
+    cd ${pkgbase}-${pkgver}
     make PREFIX=/usr DESTDIR=${pkgdir} install_artix
 }
