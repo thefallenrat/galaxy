@@ -1,0 +1,65 @@
+# Maintainer: artoo <artoo@manjaro.org>
+
+pkgbase=artools
+pkgname=('artools-base'
+        'artools-pkg'
+        'artools-iso'
+        'artools-yaml')
+pkgver=0.2
+pkgrel=1
+arch=('any')
+pkgdesc='Development tools for Artix'
+license=('GPL')
+groups=('artools')
+url='https://github.com/artix-linux/artools'
+makedepends=('docbook2x')
+source=("${pkgbase}-${pkgver}.tar.gz::$url/archive/${pkgver}.tar.gz")
+sha256sums=('6374953247488b350b57349da3f103f4b17275158de19ed55df8df7dec9a369f')
+
+prepare() {
+    cd ${pkgbase}-${pkgver}
+    # patches here
+    sed -e "s/^Version=.*/Version=${pkgver}/" -i Makefile
+}
+
+build() {
+    cd ${pkgbase}-${pkgver}
+    make SYSCONFDIR=/etc PREFIX=/usr
+}
+
+package_artools-base() {
+    pkgdesc='Development tools for Artix (base tools)'
+    depends=('openssh' 'rsync' 'haveged' 'os-prober' 'gnupg' 'pacman')
+    optdepends=('artools-pkg: Artix package tools'
+                'artools-iso: Artix iso tools'
+                'artools-yaml: Artix yaml tools')
+    backup=('etc/artools/artools.conf')
+
+    cd ${pkgbase}-${pkgver}
+    make SYSCONFDIR=/etc PREFIX=/usr DESTDIR=${pkgdir} install_base
+}
+
+package_artools-pkg() {
+    pkgdesc='Development tools for Artix (packaging tools)'
+    depends=('artools-base' 'namcap')
+
+    cd ${pkgbase}-${pkgver}
+    make SYSCONFDIR=/etc PREFIX=/usr DESTDIR=${pkgdir} install_pkg
+}
+
+package_artools-yaml() {
+    pkgdesc='Development tools for Artix (yaml tools)'
+    depends=('artools-base' 'iso-profiles-base')
+
+    cd ${pkgbase}-${pkgver}
+    make SYSCONFDIR=/etc PREFIX=/usr DESTDIR=${pkgdir} install_yaml
+}
+
+package_artools-iso() {
+    pkgdesc='Development tools for Artix (ISO tools)'
+    depends=('artools-yaml' 'dosfstools' 'libisoburn' 'squashfs-tools' 'mkinitcpio' 'mktorrent' 'grub')
+
+    cd ${pkgbase}-${pkgver}
+    make SYSCONFDIR=/etc PREFIX=/usr DESTDIR=${pkgdir} install_iso
+}
+
