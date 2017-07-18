@@ -1,0 +1,45 @@
+# Maintainer: artoo <artoo@cromnix.org>
+# Contributor: Philip Müller <philm[at]manjaro[dog]org>
+
+pkgbase=live-services
+pkgname=('artix-live-base'
+	'artix-live-openrc'
+	'artix-live-portable-efi')
+pkgver=0.2
+pkgrel=1
+pkgdesc='Artix live session'
+arch=('any')
+url="https://github.com/artix-linux/live-services"
+license=('GPL')
+makedepends=('git')
+source=("${pkgname}-${pkgver}.tar.gz::${url}/archive/0.2.tar.gz")
+sha256sums=('5919910eacaea1d90208e64fb574ef1083f40e2a5fef07dfaf3831d1a3f43f2f')
+
+build() {
+    cd ${srcdir}/${pkgbase}-${pkgver}
+    make PREFIX=/usr SYSCONFDIR=/etc
+}
+
+package_artix-live-base() {
+    pkgdesc='Artix live base scripts'
+    depends=("artools-base>=${pkgver}")
+
+    cd ${srcdir}/${pkgbase}-${pkgver}
+    make PREFIX=/usr SYSCONFDIR=/etc DESTDIR=${pkgdir} install_base
+}
+
+package_artix-live-openrc() {
+    pkgdesc='Artix live openrc init scripts'
+    depends=('openrc' 'artix-live-base')
+
+    cd ${srcdir}/${pkgbase}-${pkgver}
+    make PREFIX=/usr SYSCONFDIR=/etc DESTDIR=${pkgdir} install_rc
+}
+
+package_artix-live-portable-efi() {
+    pkgdesc='Artix live session portable efi settings'
+    depends=('artix-grub-theme')
+
+    cd ${srcdir}/${pkgbase}-${pkgver}
+    make PREFIX=/usr SYSCONFDIR=/etc DESTDIR=${pkgdir} install_portable_efi
+}
