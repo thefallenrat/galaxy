@@ -1,7 +1,7 @@
 # Maintainer: artoo <artoo@cromnix.org>
 # Contributor: Philip Müller <philm[at]manjaro[dog]org>
 
-_commit=a62007ea7fb3cd562e8e82206be80f5a3ae42094
+_commit=fe0e8bab5f0f98c5dc3533f94c9586d5a90f3423
 
 pkgname=calamares
 pkgver=3.1.1
@@ -9,7 +9,7 @@ pkgrel=3
 pkgdesc='Distribution-independent installer framework'
 arch=('i686' 'x86_64')
 license=(GPL)
-url="https://github.com/cromnix/calamares"
+url="https://github.com/artix-linux/calamares"
 license=('LGPL')
 depends=('kconfig' 'kcoreaddons' 'ki18n' 'solid' 'yaml-cpp' 'kpmcore>=3.1.0'
          'boost-libs' 'hwinfo' 'qt5-svg' 'polkit-qt5' 'gtk-update-icon-cache' 'python-pyqt5')
@@ -19,8 +19,13 @@ backup=('usr/share/calamares/modules/bootloader.conf'
         'usr/share/calamares/modules/initcpio.conf'
         'usr/share/calamares/modules/unpackfs.conf')
 
-source=("$pkgname-$pkgver.tar.gz::https://github.com/manjaro/calamares/archive/${_commit}.tar.gz")
-sha256sums=('e761ed67e4f02d80ecd631cf3b59197fc4b8a7cd6d8d740173423932b8a9eb81')
+source=("$pkgname-$pkgver.tar.gz::https://github.com/artix-linux/calamares/archive/${_commit}.tar.gz")
+sha256sums=('ce5f5db0d223679c58ee442af59d5cde8a6b8f23dcb56af4c71ee5ff4acb1e87')
+
+# pkgver() {
+#     cd $pkgname
+#     git describe --tags | sed 's/-/+/g'
+# }
 
 prepare() {
 	mv ${srcdir}/calamares-${_commit} ${srcdir}/calamares-${pkgver}
