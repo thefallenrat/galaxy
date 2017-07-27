@@ -3,20 +3,21 @@
 
 pkgbase=desktop-presets
 pkgname=(
+        'artix-icons'
         'artix-backgrounds'
         'artix-lxqt-basic-presets'
         'artix-lxqt-extra-presets'
         'artix-cinnamon-basic-presets'
         'artix-cinnamon-extra-presets'
 )
-pkgver=0.2
+pkgver=0.3.2
 pkgrel=1
 arch=('any')
 url="https://github.com/artix-linux/desktop-presets"
 license=('GPL')
 makedepends=('git')
 source=("${pkgbase}-${pkgver}.tar.gz::$url/archive/${pkgver}.tar.gz")
-sha256sums=('0fad0dcf8fcb685ea5f1d8e36eaa7888d153a5c6f82ed70a4e948671c5a61b44')
+sha256sums=('706ce4ce5aeb4d786b59317731ecb5b61f2a18a3032a09c9f2f5ca18dbbc7b00')
 
 _inst_dir(){
     cd ${pkgbase}-${pkgver}
@@ -40,14 +41,22 @@ package_artix-backgrounds(){
     pkgdesc='Artix backgrounds'
 
     cd ${pkgbase}-${pkgver}
-    install -Dm755 backgrounds/artix.jpg ${pkgdir}/usr/share/backgrounds/artix.jpg
+    make PREFIX=/usr DESTDIR=${pkgdir} install_backgrounds
+}
+
+package_artix-icons(){
+    pkgdesc='Artix icons'
+
+    cd ${pkgbase}-${pkgver}
+    make PREFIX=/usr DESTDIR=${pkgdir} install_icons
 }
 
 package_artix-lxqt-basic-presets() {
     pkgdesc='Artix lxqt basic presets'
     depends=('breeze-icons'
             'breeze-gtk'
-            'artix-backgrounds')
+            'artix-backgrounds'
+            'artix-icons')
     provides=('desktop-presets')
     conflicts=('desktop-presets')
 
@@ -63,7 +72,8 @@ package_artix-lxqt-extra-presets() {
 
 package_artix-cinnamon-basic-presets() {
     pkgdesc='Artix cinnamon basic presets'
-    depends=('artix-backgrounds')
+    depends=('artix-backgrounds'
+            'artix-icons')
     provides=('desktop-presets')
     conflicts=('desktop-presets')
 
