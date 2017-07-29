@@ -5,19 +5,17 @@ pkgbase=desktop-presets
 pkgname=(
         'artix-icons'
         'artix-backgrounds'
-        'artix-lxqt-basic-presets'
-        'artix-lxqt-extra-presets'
-        'artix-cinnamon-basic-presets'
-        'artix-cinnamon-extra-presets'
+        'artix-lxqt-presets'
+        'artix-cinnamon-presets'
 )
-pkgver=0.4
+pkgver=0.4.1
 pkgrel=1
 arch=('any')
 url="https://github.com/artix-linux/desktop-presets"
 license=('GPL')
 makedepends=('git')
 source=("${pkgbase}-${pkgver}.tar.gz::$url/archive/${pkgver}.tar.gz")
-sha256sums=('2ef502d8754a46474c5af01dd8fcda1a85d8a7fb8c55eaf5e6e0dbbea940b307')
+sha256sums=('40cdea62a5a2178f838345da8babc9acc5d3c779a7ebaf995685692a4fb10a19')
 
 _inst_dir(){
     cd ${pkgbase}-${pkgver}
@@ -51,38 +49,26 @@ package_artix-icons(){
     make PREFIX=/usr DESTDIR=${pkgdir} install_icons
 }
 
-package_artix-lxqt-basic-presets() {
-    pkgdesc='Artix lxqt basic presets'
+package_artix-lxqt-presets() {
+    pkgdesc='Artix lxqt presets'
     depends=('breeze-icons'
             'breeze-gtk'
             'artix-backgrounds'
             'artix-icons')
     provides=('desktop-presets')
-    conflicts=('desktop-presets')
+    conflicts=('artix-lxqt-basic-presets')
+    replaces=('artix-lxqt-basic-presets')
 
-    _inst_dir 'lxqt/basic'
+    _inst_dir 'lxqt'
 }
 
-package_artix-lxqt-extra-presets() {
-    pkgdesc='Artix lxqt extra presets'
-    depends=('artix-lxqt-basic-presets')
-
-    _inst_dir 'lxqt/extra'
-}
-
-package_artix-cinnamon-basic-presets() {
-    pkgdesc='Artix cinnamon basic presets'
+package_artix-cinnamon-presets() {
+    pkgdesc='Artix cinnamon presets'
     depends=('artix-backgrounds'
             'artix-icons')
     provides=('desktop-presets')
-    conflicts=('desktop-presets')
+    conflicts=('artix-cinnamon-basic-presets')
+    replaces=('artix-cinnamon-basic-presets')
 
-    _inst_dir 'cinnamon/basic'
-}
-
-package_artix-cinnamon-extra-presets() {
-    pkgdesc='Artix cinnamon extra presets'
-    depends=('artix-cinnamon-basic-presets')
-
-    _inst_dir 'cinnamon/extra'
+    _inst_dir 'cinnamon'
 }
