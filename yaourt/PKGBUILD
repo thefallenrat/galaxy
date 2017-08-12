@@ -10,9 +10,7 @@ arch=('any')
 url="https://github.com/archlinuxfr/$pkgname"
 license=(GPL)
 depends=('diffutils' 'pacman>=5.0' 'package-query>=1.8' 'gettext')
-optdepends=('aurvote: vote for favorite packages from AUR'
-            'customizepkg: automatically modify PKGBUILD during install/upgrade'
-            'rsync: retrieve PKGBUILD from official repositories')
+optdepends=('rsync: retrieve PKGBUILD from official repositories')
 backup=('etc/yaourtrc')
 source=("$url/releases/download/$pkgver/$pkgname-$pkgver.tar.gz" '0001-alpm-artix-brand.patch')
 sha256sums=('9a485cef9d50e80b8abae5dbb147e09bdeb8818d29316b65e892fb560c48517d'
