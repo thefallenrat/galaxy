@@ -4,12 +4,12 @@
 pkgname=mdm-display-manager
 _pkgname=mdm
 pkgver=2.0.18
-pkgrel=2
+pkgrel=3
 pkgdesc="The MDM Display Manager"
 arch=('i686' 'x86_64')
 url="http://www.linuxmint.com"
 license=('GPL')
-depends=('libdmx' 'libgnomecanvas' 'dbus-glib' 'webkit2gtk')
+depends=('libdmx' 'libgnomecanvas' 'dbus-glib' 'webkitgtk')
 makedepends=('gnome-common' 'intltool' 'perl' 'gnome-doc-utils' 'xorg-server' 'pango' 'zenity' 'popt' 'pkg-config' 'automake' 'autoconf' 'libtool')
 provides=('gdm' 'gdm-old' 'mate-display-manager' 'mdm')
 conflicts=('gdm' 'mate-display-manager' 'mdm' 'mdm-nosystemd')
