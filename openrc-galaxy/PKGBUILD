@@ -95,6 +95,7 @@ source=(
         "atd.initd::${_url}/sys-process/at/files/atd.rc8"
         "cgproxy.initd::${_url}/app-admin/cgmanager/files/cgproxy.initd-r1"
         "cgmanager.initd::${_url}/app-admin/cgmanager/files/cgmanager.initd-r1"
+        'jenkins.confd'
         'jenkins.initd'
         "jenkins.logrotate"
         "espeakup.confd::${_url}/app-accessibility/espeakup/files/espeakup.confd"
@@ -404,6 +405,7 @@ package_jenkins-openrc() {
     pkgdesc="OpenRC jenkins init script"
     depends=('jenkins' 'openrc')
 
+    _inst_confd 'jenkins'
     _inst_initd 'jenkins'
 
     install -Dm644 "${srcdir}/jenkins.logrotate" "${pkgdir}/etc/logrotate.d/jenkins"
