@@ -38,8 +38,9 @@ pkgname=(
         'espeakup-openrc'
         'tlp-openrc'
         'bumblebee-openrc'
+        'znc-openrc'
 )
-pkgver=20170803
+pkgver=20170820
 pkgrel=1
 pkgdesc="OpenRC init scripts"
 arch=('any')
@@ -109,6 +110,8 @@ source=(
         'tlp.initd'
         "bumblebee.confd::${_url}/x11-misc/bumblebee/files/bumblebee.confd"
         "bumblebee.initd::${_url}/x11-misc/bumblebee/files/bumblebee.initd"
+        "znc.confd::${_url}/net-irc/znc/files/znc.confd-r1"
+        "znc.initd::${_url}/net-irc/znc/files/znc.initd-r1" 
 )
 
 pkgver() {
@@ -438,6 +441,16 @@ package_bumblebee-openrc() {
 
     sed -e 's|need xdm vgl|need xdm|' -i "${pkgdir}"/etc/init.d/bumblebee
 }
+
+package_znc-openrc() {
+    pkgdesc="OpenRC ZNC init script"
+    depends=('openrc' 'znc')
+    backup=('etc/conf.d/znc')
+
+    _inst_confd 'znc'
+    _inst_initd 'znc'
+}
+
 sha256sums=('3755d4eb8bb64a1304e5defedb949305ac550565da36fe4f94d5f31beee821ba'
             '5dcf5721a129b3782c13fc453853c390c34e2ad4ee00706388ce014454b063ee'
             '5ee23ee05da536fb67456c034e757841b27bc8528d93d2bc835e7427fe77d05e'
@@ -497,4 +510,6 @@ sha256sums=('3755d4eb8bb64a1304e5defedb949305ac550565da36fe4f94d5f31beee821ba'
             'f78ced5ebe644522c6ce102b3f6bcf932686243a50629559f988548c570cad3a'
             '4fc771f1ce9423b1f5facc006845d3ab5cbce3bfdf1aa0737b2ed8e7d6f8c3ac'
             '9e0287f542cff0fd3452a0c3d6d427a3404706c93ac9a00f4d99fe52ed596d75'
-            '5c67465ca9a2d4dc6fd35a7827d82ea6d72b13a8e93373e9055970fc71754b18')
+            '5c67465ca9a2d4dc6fd35a7827d82ea6d72b13a8e93373e9055970fc71754b18'
+            '69238e187b86c4c15d0751a28d6710e3b21fdd19627b28d5ee09009dc1d95b01'
+            'ad19b0de6bd3616b6396b97eeddb4620d57de5aa5a399a3004bef78266140645')
