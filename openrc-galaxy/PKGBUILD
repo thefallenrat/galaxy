@@ -42,6 +42,7 @@ pkgname=(
         'ddclient-openrc'
         'apcupsd-openrc'
         'sshguard-openrc'
+        'redis-openrc'
 )
 pkgver=20170820
 pkgrel=1
@@ -120,6 +121,8 @@ source=(
         "apcupsd.powerfail.initd::${_url}/sys-power/apcupsd/files/apcupsd.powerfail.init"
         "sshguard.confd::${_url}/app-admin/sshguard/files/sshguard.confd"
         "sshguard.initd::${_url}/app-admin/sshguard/files/sshguard.initd" 
+        "redis.confd::${_url}/dev-db/redis/files/redis.confd"
+        "redis.initd::${_url}/dev-db/redis/files/redis.initd-4"
 )
 
 pkgver() {
@@ -497,6 +500,21 @@ package_sshguard-openrc() {
         -i "${pkgdir}/etc/init.d/sshguard"
 }
 
+package_redis-openrc() {
+    pkgdesc="OpenRC redis init script"
+    depends=('openrc' 'redis')
+    backup=('etc/conf.d/redis')
+
+    _inst_confd 'redis'
+    _inst_initd 'redis'
+
+    sed -e 's|/var/run|/run|g' \
+        -i "${pkgdir}/etc/conf.d/redis"
+
+    sed -e 's|/usr/sbin|/usr/bin|g' \
+        -i "${pkgdir}/etc/init.d/redis"
+}
+
 sha256sums=('3755d4eb8bb64a1304e5defedb949305ac550565da36fe4f94d5f31beee821ba'
             '5dcf5721a129b3782c13fc453853c390c34e2ad4ee00706388ce014454b063ee'
             '5ee23ee05da536fb67456c034e757841b27bc8528d93d2bc835e7427fe77d05e'
@@ -563,4 +581,6 @@ sha256sums=('3755d4eb8bb64a1304e5defedb949305ac550565da36fe4f94d5f31beee821ba'
             'a43fe46b55d938a5402d6c83235adfc5d488cdd797b6ad722d6156eb711ab688'
             'edd81aa8249c6f3ec1749c61ec464219380ddb5f2d3667a619ce8a0fdb6905c1'
             'ee121f8c4c045ba1cfa67a173040358b1ea5c0561427d64dbd1092a24f068519'
-            '759ef54c0f54a27023020ff8da7811b38459a194d7d75d15ea88f7609b2a013c')
+            '759ef54c0f54a27023020ff8da7811b38459a194d7d75d15ea88f7609b2a013c'
+            '8c68e29dc88c8ad99b9212a448d313d1406ef02c7638398b2e48ea1ca8aa937b'
+            '94257e625ee8c0212dd8afdaa9871796f9944a3ee68641cbde902a1a8a9c6fa9')
