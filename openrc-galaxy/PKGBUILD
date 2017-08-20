@@ -40,6 +40,7 @@ pkgname=(
         'bumblebee-openrc'
         'znc-openrc'
         'ddclient-openrc'
+        'apcupsd-openrc'
 )
 pkgver=20170820
 pkgrel=1
@@ -114,6 +115,8 @@ source=(
         "znc.confd::${_url}/net-irc/znc/files/znc.confd-r1"
         "znc.initd::${_url}/net-irc/znc/files/znc.initd-r1" 
         "ddclient.initd::${_url}/net-dns/ddclient/files/ddclient.initd-r4"
+        "apcupsd.initd::${_url}/sys-power/apcupsd/files/apcupsd.init.4"
+        "apcupsd.powerfail.initd::${_url}/sys-power/apcupsd/files/apcupsd.powerfail.init"
 )
 
 pkgver() {
@@ -463,6 +466,21 @@ package_ddclient-openrc() {
         -i "${pkgdir}/etc/init.d/ddclient"
 }
 
+package_apcupsd-openrc() {
+    pkgdesc="OpenRC apcupsd init script"
+    depends=('openrc' 'apcupsd')
+
+    _inst_initd 'apcupsd'
+    _inst_initd 'apcupsd.powerfail'
+
+    sed -e 's|/sbin|/usr/bin|g' \
+        -e 's|/bin|/usr/bin|g' \
+        -i "${pkgdir}/etc/init.d/apcupsd"
+
+    sed -e 's|/sbin|/usr/bin|g' \
+        -i "${pkgdir}/etc/init.d/apcupsd.powerfail"
+}
+
 sha256sums=('3755d4eb8bb64a1304e5defedb949305ac550565da36fe4f94d5f31beee821ba'
             '5dcf5721a129b3782c13fc453853c390c34e2ad4ee00706388ce014454b063ee'
             '5ee23ee05da536fb67456c034e757841b27bc8528d93d2bc835e7427fe77d05e'
@@ -525,4 +543,6 @@ sha256sums=('3755d4eb8bb64a1304e5defedb949305ac550565da36fe4f94d5f31beee821ba'
             '5c67465ca9a2d4dc6fd35a7827d82ea6d72b13a8e93373e9055970fc71754b18'
             '69238e187b86c4c15d0751a28d6710e3b21fdd19627b28d5ee09009dc1d95b01'
             'ad19b0de6bd3616b6396b97eeddb4620d57de5aa5a399a3004bef78266140645'
-            '8e63f6d572bb2addd62f38f12e14523d68d2536cd15e0a1057b5da47bb204b94')
+            '8e63f6d572bb2addd62f38f12e14523d68d2536cd15e0a1057b5da47bb204b94'
+            'a43fe46b55d938a5402d6c83235adfc5d488cdd797b6ad722d6156eb711ab688'
+            'edd81aa8249c6f3ec1749c61ec464219380ddb5f2d3667a619ce8a0fdb6905c1')
