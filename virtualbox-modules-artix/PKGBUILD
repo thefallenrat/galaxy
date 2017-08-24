@@ -10,7 +10,7 @@ pkgrel=3
 # remember to also adjust the .install file!
 _linux_major=4
 _linux_minor=9
-_linux_revision=43
+_linux_revision=44
 arch=('i686' 'x86_64')
 url='http://virtualbox.org'
 license=('GPL')

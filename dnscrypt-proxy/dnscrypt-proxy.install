@@ -1,0 +1,7 @@
+post_install() {
+	useradd -r -N -d /var/empty -s /sbin/nologin dnscrypt
+}
+
+post_remove() {
+	userdel dnscrypt
+}

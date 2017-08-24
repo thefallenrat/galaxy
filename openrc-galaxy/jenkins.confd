@@ -4,17 +4,20 @@
 # Directory where Jenkins store its configuration and working
 # files (checkouts, build reports, artifacts, ...).
 #
-JENKINS_HOME="/var/lib/jenkins/home"
+
+JENKINS_HOME="/var/lib/jenkins"
 
 #
 # Options to pass to java when running Jenkins.
 #
-JENKINS_JAVA_OPTIONS="-Djava.awt.headless=true"
+JAVA=/usr/bin/java
+JAVA_ARGS="-Xmx512m -Djava.awt.headless=true"
+JAVA_OPTS=
 
 #
 # Port Jenkins is listening on.
 #
-JENKINS_PORT="8080"
+JENKINS_PORT="8090"
 
 #
 # Debug level for logs -- the higher the value, the more verbose.
@@ -49,14 +52,16 @@ JENKINS_ARGS=""
 #
 JENKINS_USER=jenkins
 
-
-
 #
-# Pid File 
+# Pid File
 #
-JENKINS_PIDFILE="/var/run/jenkins.pid"
+JENKINS_PIDFILE="/run/jenkins.pid"
 
 #
 # War File
 #
-JENKINS_WAR="/opt/jenkins/jenkins.war"
+JENKINS_WAR="/usr/share/java/jenkins/jenkins.war"
+
+
+JENKINS_WEBROOT=/var/cache/jenkins
+JENKINS_AJPPORT=-1
