@@ -9,31 +9,31 @@ $_prefix && _sed_args+=(-e 's|#!/sbin/openrc-run|#!/usr/bin/openrc-run|g')
 
 pkgbase=openrc-galaxy
 pkgname=(
-        'acpid-openrc'
-        'autofs-openrc'
-        'hostapd-openrc'
-        'openntpd-openrc'
-        'polipo-openrc'
-        'privoxy-openrc'
-        'squid-openrc'
-        'ufw-openrc'
-        'vsftpd-openrc'
-        'tor-openrc'
-        'syncthing-openrc'
-        'vnstat-openrc'
-        'unbound-openrc'
-        'cpupower-openrc'
-        'connman-openrc'
-        'fcron-openrc'
-        'rsyslog-openrc'
-        'salt-openrc'
-        'thermald-openrc'
-        'xe-guest-utilities-openrc'
-        'boinc-openrc'
-        'at-openrc'
-        'libvirt-openrc'
-        'cgmanager-openrc'
-        'virtualbox-guest-utils-openrc'
+#         'acpid-openrc'
+#         'autofs-openrc'
+#         'hostapd-openrc'
+#         'openntpd-openrc'
+#         'polipo-openrc'
+#         'privoxy-openrc'
+#         'squid-openrc'
+#         'ufw-openrc'
+#         'vsftpd-openrc'
+#         'tor-openrc'
+#         'syncthing-openrc'
+#         'vnstat-openrc'
+#         'unbound-openrc'
+#         'cpupower-openrc'
+#         'connman-openrc'
+#         'fcron-openrc'
+#         'rsyslog-openrc'
+#         'salt-openrc'
+#         'thermald-openrc'
+#         'xe-guest-utilities-openrc'
+#         'boinc-openrc'
+#         'at-openrc'
+#         'libvirt-openrc'
+#         'cgmanager-openrc'
+#         'virtualbox-guest-utils-openrc'
         'jenkins-openrc'
         'espeakup-openrc'
         'tlp-openrc'
@@ -43,8 +43,9 @@ pkgname=(
         'apcupsd-openrc'
         'sshguard-openrc'
         'redis-openrc'
+        'dnscrypt-proxy-openrc'
 )
-pkgver=20170820
+pkgver=20170823
 pkgrel=1
 pkgdesc="OpenRC init scripts"
 arch=('any')
@@ -123,6 +124,8 @@ source=(
         "sshguard.initd::${_url}/app-admin/sshguard/files/sshguard.initd" 
         "redis.confd::${_url}/dev-db/redis/files/redis.confd"
         "redis.initd::${_url}/dev-db/redis/files/redis.initd-4"
+        "dnscrypt-proxy.confd::${_url}/net-dns/dnscrypt-proxy/files/dnscrypt-proxy.confd"
+        "dnscrypt-proxy.initd::${_url}/net-dns/dnscrypt-proxy/files/dnscrypt-proxy.initd"
 )
 
 pkgver() {
@@ -418,6 +421,7 @@ package_libvirt-openrc() {
 package_jenkins-openrc() {
     pkgdesc="OpenRC jenkins init script"
     depends=('jenkins' 'openrc')
+    backup=('etc/conf.d/jenkins')
 
     _inst_confd 'jenkins'
     _inst_initd 'jenkins'
@@ -515,6 +519,13 @@ package_redis-openrc() {
         -i "${pkgdir}/etc/init.d/redis"
 }
 
+package_dnscrypt-proxy-openrc() {
+    pkgdesc="OpenRC dnscrypt-proxy init script"
+    depends=('openrc' 'dnscrypt-proxy')
+
+    _inst_confd 'dnscrypt-proxy'
+    _inst_initd 'dnscrypt-proxy'
+}
 sha256sums=('3755d4eb8bb64a1304e5defedb949305ac550565da36fe4f94d5f31beee821ba'
             '5dcf5721a129b3782c13fc453853c390c34e2ad4ee00706388ce014454b063ee'
             '5ee23ee05da536fb67456c034e757841b27bc8528d93d2bc835e7427fe77d05e'
@@ -557,12 +568,13 @@ sha256sums=('3755d4eb8bb64a1304e5defedb949305ac550565da36fe4f94d5f31beee821ba'
             'c65e8f0354364f32e87bee2922979cb09ea680ad6baae48a910a10d39b850987'
             '6be7c321b362054aefef183f0c4b8404ea64d4232154756ddc79de1fca067952'
             'ed42b285adc35b8d2d5e5aeac934e63e36e67e99036978d05e48deccaf3042b8'
-            '1fc340ff0435753d3552e1b0eac3fbdde2e8149b1841f63581c973ae5e0ebd1e'
+            'c8d6daacb06c3be6eed1afbd942384ecf0aa98d78fd23fc44e3f008f49404c5d'
             'ece01506efa6d73d7cbe9bc1da6eb1afc4d63451ab1fccf5051178b6e937d68e'
             '115f3be9cfd306251909ca7fc2dbc55ca71f6f38a3ebb62d9a428a9eddcd8ffb'
             '97220fa0af6dcaa9d2cb726620ee3de8e216e55bab37cea40e5ed010ed637e35'
             'f162685428a6593630daf5d636c198caf4992843ced977dc6d7288b7559a062c'
-            '7ef50b386bef359224dffb964387f651aa02cd610c3f73d585fa3ae78e9becee'
+            'ce7cdba0316614a32707b4b9ec3ee0d229738b3b23d073bbe3b5960e627bdadb'
+            'bdfb041cdcfbf503c749f29edca2a97d5e3ef81a0d988724e6d5c187023d73d1'
             '03dcaccbb0d398c2b600be0752ffc68d20c877b58a10026b7c59b0bd40c0e5bf'
             '32e6de11417ebb199a7bf46eb8cf77054b1af1c9f4bcc80b856b34758830eb9f'
             '9bfaf3950744a9376cdd74240c3e6b9a92d7b17a16a3b9eb0485f5fd279ff963'
@@ -584,3 +596,5 @@ sha256sums=('3755d4eb8bb64a1304e5defedb949305ac550565da36fe4f94d5f31beee821ba'
             '759ef54c0f54a27023020ff8da7811b38459a194d7d75d15ea88f7609b2a013c'
             '8c68e29dc88c8ad99b9212a448d313d1406ef02c7638398b2e48ea1ca8aa937b'
             '94257e625ee8c0212dd8afdaa9871796f9944a3ee68641cbde902a1a8a9c6fa9')
+            '11d635f9a504899e450e8f742952b3a736a5fc7da61eeff83eba416f3618c304'
+            '48ea1cc31b5c13d3b4fd04cf1b16a8b6a565e5ec60a639a0290459874d3495a9')
