@@ -44,6 +44,7 @@ pkgname=(
         'sshguard-openrc'
         'redis-openrc'
         'dnscrypt-proxy-openrc'
+        'gitlab-openrc'
 )
 pkgver=20170823
 pkgrel=1
@@ -116,16 +117,22 @@ source=(
         "bumblebee.confd::${_url}/x11-misc/bumblebee/files/bumblebee.confd"
         "bumblebee.initd::${_url}/x11-misc/bumblebee/files/bumblebee.initd"
         "znc.confd::${_url}/net-irc/znc/files/znc.confd-r1"
-        "znc.initd::${_url}/net-irc/znc/files/znc.initd-r1" 
+        "znc.initd::${_url}/net-irc/znc/files/znc.initd-r1"
         "ddclient.initd::${_url}/net-dns/ddclient/files/ddclient.initd-r4"
         "apcupsd.initd::${_url}/sys-power/apcupsd/files/apcupsd.init.4"
         "apcupsd.powerfail.initd::${_url}/sys-power/apcupsd/files/apcupsd.powerfail.init"
         "sshguard.confd::${_url}/app-admin/sshguard/files/sshguard.confd"
-        "sshguard.initd::${_url}/app-admin/sshguard/files/sshguard.initd" 
+        "sshguard.initd::${_url}/app-admin/sshguard/files/sshguard.initd"
         "redis.confd::${_url}/dev-db/redis/files/redis.confd"
         "redis.initd::${_url}/dev-db/redis/files/redis.initd-4"
         "dnscrypt-proxy.confd::${_url}/net-dns/dnscrypt-proxy/files/dnscrypt-proxy.confd"
         "dnscrypt-proxy.initd::${_url}/net-dns/dnscrypt-proxy/files/dnscrypt-proxy.initd"
+		'gitlab-ci-multi-runner.'{initd,confd}
+		'gitlab-gitaly.'{initd,confd}
+		'gitlab-pages.'{initd,confd}
+		'gitlab-sidekiq.'{initd,confd}
+		'gitlab-unicorn.'{initd,confd}
+		'gitlab-workhorse.'{initd,confd}
 )
 
 pkgver() {
@@ -526,6 +533,24 @@ package_dnscrypt-proxy-openrc() {
     _inst_confd 'dnscrypt-proxy'
     _inst_initd 'dnscrypt-proxy'
 }
+
+package_gitlab-openrc() {
+    pkgdesc="OpenRC gitlab init scripts"
+    depends=('openrc' 'gitlab')
+
+    _inst_confd 'gitlab-ci-multi-runner'
+    _inst_initd 'gitlab-ci-multi-runner'
+    _inst_confd 'gitlab-gitaly'
+    _inst_initd 'gitlab-gitaly'
+    _inst_confd 'gitlab-pages'
+    _inst_initd 'gitlab-pages'
+    _inst_confd 'gitlab-sidekiq'
+    _inst_initd 'gitlab-sidekiq'
+    _inst_confd 'gitlab-unicorn'
+    _inst_initd 'gitlab-unicorn'
+    _inst_confd 'gitlab-workhorse'
+    _inst_initd 'gitlab-workhorse'
+}
 sha256sums=('3755d4eb8bb64a1304e5defedb949305ac550565da36fe4f94d5f31beee821ba'
             '5dcf5721a129b3782c13fc453853c390c34e2ad4ee00706388ce014454b063ee'
             '5ee23ee05da536fb67456c034e757841b27bc8528d93d2bc835e7427fe77d05e'
@@ -595,6 +620,18 @@ sha256sums=('3755d4eb8bb64a1304e5defedb949305ac550565da36fe4f94d5f31beee821ba'
             'ee121f8c4c045ba1cfa67a173040358b1ea5c0561427d64dbd1092a24f068519'
             '759ef54c0f54a27023020ff8da7811b38459a194d7d75d15ea88f7609b2a013c'
             '8c68e29dc88c8ad99b9212a448d313d1406ef02c7638398b2e48ea1ca8aa937b'
-            '94257e625ee8c0212dd8afdaa9871796f9944a3ee68641cbde902a1a8a9c6fa9')
+            '94257e625ee8c0212dd8afdaa9871796f9944a3ee68641cbde902a1a8a9c6fa9'
             '11d635f9a504899e450e8f742952b3a736a5fc7da61eeff83eba416f3618c304'
-            '48ea1cc31b5c13d3b4fd04cf1b16a8b6a565e5ec60a639a0290459874d3495a9')
+            '48ea1cc31b5c13d3b4fd04cf1b16a8b6a565e5ec60a639a0290459874d3495a9'
+            '50c1ed3272e056ca74242e5ff395785e3bec78ac1ea403aa4a2a5e72c6f57609'
+            '0b93ba53d557fbf603b50f6d78eb2c4415b9a79f056142b6edf4a63fc6612d6e'
+            '32ff7ecc80e74625c3c8202441fd4358205d673361dc9923b1d8f96745c7767e'
+            'bb3667bd3c48435553ce94408a0436a4fab26a08b624b356c35ef40a45825223'
+            'bbc0c1a806666bde715238b0dd86e75a74603da13ac171d81df0fbd3f4972eef'
+            '55ff40c551692a6a5b3d770f8b26b6344e681901d577c3dee8c30f756b41f3e8'
+            'a91e35a1fd2329cf2b65017ebc2d5b0b1321fe2a4cb5f22c4bb3cd2b9b7941cc'
+            '1f076633b65215358484934c2711a2947bdf60482e0546b065c05749b172e0f9'
+            'fdf635bb2c84d65da55b8928ef3d54cef2d87f67c2a788b8e3b074b2f344f2de'
+            'bc63d37d473378c88279e607865c5473daf1a66f3b4d1624b85d80823bba400b'
+            'e16621643cdb4225d4ea77f81dffeb9180b62c80f2ef6f304e9423b499e49ffe'
+            'f891b336afe3fdb992821fe3f4facb95263987f8ffd61de06cb3622930bb938d')
