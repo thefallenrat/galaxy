@@ -7,12 +7,14 @@ pipeline {
                     GIT_COMMIT=$(git rev-parse HEAD)
                     DEST=$(git show --pretty=format: --name-only ${GIT_COMMIT})
                     REPO_NAME='galaxy'
+                    IS_BUILD=false
                     case ${BRANCH_NAME} in
                         'testing'|'staging') REPO_NAME=${REPO_NAME}-${BRANCH_NAME} ;;
                     esac
                     for f in ${DEST[@]};do
                         if [[ $f == */PKGBUILD ]];then
                             PACKAGE=${f%/PKGBUILD}
+                            IS_BUILD=true
                             buildpkg-${BRANCH_NAME} -p ${PACKAGE} -u
                         fi
                     done
@@ -21,7 +23,9 @@ pipeline {
             post {
                 success {
                     sh '''
-                        deploypkg -p ${PACKAGE} -r ${REPO_NAME} -x
+                        if ${IS_BUILD};then
+                            deploypkg -p ${PACKAGE} -r ${REPO_NAME} -x
+                        fi
                     '''
                 }
             }
