@@ -13,7 +13,7 @@ pipeline {
                     for f in ${DEST[@]};do
                         if [[ $f == */PKGBUILD ]];then
                             PACKAGE=${f%/PKGBUILD}
-                            buildpkg-${BRANCH_NAME} -p ${PACKAGE} -u
+                            buildpkg-${BRANCH_NAME} -p ${PACKAGE} -u -z ${REPO_NAME}
                         fi
                     done
                 '''
