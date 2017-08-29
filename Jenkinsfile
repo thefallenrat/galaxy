@@ -6,7 +6,7 @@ pipeline {
                 sh '''
                     GIT_COMMIT=$(git rev-parse HEAD)
                     DEST=$(git show --pretty=format: --name-only ${GIT_COMMIT})
-                    REPO_NAME = 'galaxy'
+                    REPO_NAME='galaxy'
                     case ${BRANCH_NAME} in
                         'testing'|'staging') REPO_NAME=${REPO_NAME}-${BRANCH_NAME} ;;
                     esac
