@@ -5,55 +5,56 @@ pipeline {
             steps {
                 sh '''
                     GIT_COMMIT=$(git rev-parse HEAD)
-                    DEST=$(git show --pretty=format: --name-only ${GIT_COMMIT})
-                    REPO_NAME='system'
+                    GIT_COMMIT_FILES=$(git show --pretty=format: --name-only ${GIT_COMMIT})
+                    REPO_NAME='galaxy'
                     case ${BRANCH_NAME} in
                         'testing'|'staging')
                             REPO_NAME=${REPO_NAME}-${BRANCH_NAME}
-                            CMD="buildpkg-${BRANCH_NAME}"
+                            BUILDPKG="buildpkg-${BRANCH_NAME}"
                         ;;
                         'master')
-                            CMD="buildpkg"
+                            BUILDPKG="buildpkg"
                         ;;
                         PR-*)
                             REPO_NAME=${REPO_NAME}-testing
-                            CMD="buildpkg-testing"
+                            BUILDPKG="buildpkg-testing"
                         ;;
                     esac
-                    echo ${CMD} > cmd.txt
+                    echo ${BUILDPKG} > cmd.txt
                     echo ${REPO_NAME} > repo.txt
-                '''
-            }
-        }
-        stage('Build') {
-            environment {
-                CMD = readFile('cmd.txt')
-                REPO_NAME = readFile('repo.txt')
-            }
-            steps {
-                sh '''
                     PACKAGE='none'
-                    for f in ${DEST[@]};do
-                        if [[ $f == */PKGBUILD ]];then
-                            PACKAGE=${f%/PKGBUILD}
-                            ${CMD} -p ${PACKAGE} -u -z ${REPO_NAME}
-                        fi
+                    for f in ${GIT_COMMIT_FILES[@]};do
+                        [[ $f == */PKGBUILD ]] && PACKAGE=${f%/PKGBUILD}
                     done
                     echo ${PACKAGE} > package.txt
                 '''
             }
         }
-        stage('Deloyment') {
+        stage('Build') {
             environment {
-                PACKAGE = readFile('package.txt')
+                BUILDPKG = readFile('cmd.txt')
                 REPO_NAME = readFile('repo.txt')
+                PACKAGE = readFile('package.txt')
             }
             steps {
                 sh '''
-                    if [[ ${PACKAGE} != 'none' ]]; then
-                        echo "deploypkg -p ${PKG} -r ${REPO_NAME} -x"
+                    echo "REPO_NAME: ${REPO_NAME}"
+                    echo "PACKAGE: ${PACKAGE}"
+                    if [[ "${PACKAGE}" != 'none' ]]; then
+                        ${BUILDPKG} -p ${PACKAGE} -u -z ${REPO_NAME}
                     fi
                 '''
+            }
+            post {
+                success {
+                    sh '''
+                        echo "REPO_NAME: ${REPO_NAME}"
+                        echo "PACKAGE: ${PACKAGE}"
+                        if [[ "${PACKAGE}" != 'none' ]]; then
+                            deploypkg -p ${PACKAGE} -r ${REPO_NAME} -x
+                        fi
+                    '''
+                }
             }
         }
     }
