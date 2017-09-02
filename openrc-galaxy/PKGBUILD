@@ -490,11 +490,11 @@ package_apcupsd-openrc() {
     _inst_initd 'apcupsd'
     _inst_initd 'apcupsd.powerfail'
 
-    sed -e 's|/sbin|/usr/bin|g' \
-        -e 's|/bin|/usr/bin|g' \
+    sed -e 's| /sbin| /usr/bin|g' \
+        -e 's|	/bin|	/usr/bin|g' \
         -i "${pkgdir}/etc/init.d/apcupsd"
 
-    sed -e 's|/sbin|/usr/bin|g' \
+    sed -e 's|	/sbin|	/usr/bin|g' \
         -i "${pkgdir}/etc/init.d/apcupsd.powerfail"
 }
 
