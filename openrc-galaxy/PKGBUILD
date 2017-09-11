@@ -137,8 +137,8 @@ source=(
 		'gitlab-workhorse.'{initd,confd}
 		"grafana.confd::${_url}/www-apps/grafana-bin/files/grafana.confd"
         "grafana.initd::${_url}/www-apps/grafana-bin/files/grafana.initd.3"
-        "fwknopd.confd::${_url}/net-firewall/fwknop/files/fwknopd.confd"
-        "fwknopd.initd::${_url}/net-firewall/fwknop/files/fwknopd.init"
+        "fwknop.confd::${_url}/net-firewall/fwknop/files/fwknopd.confd"
+        "fwknop.initd::${_url}/net-firewall/fwknop/files/fwknopd.init"
 )
 
 # pkgver() {
