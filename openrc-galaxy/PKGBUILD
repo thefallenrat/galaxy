@@ -34,7 +34,7 @@ pkgname=(
 #         'libvirt-openrc'
 #         'cgmanager-openrc'
 #         'virtualbox-guest-utils-openrc'
-        'jenkins-openrc'
+#         'jenkins-openrc'
 #         'espeakup-openrc'
 #         'tlp-openrc'
 #         'bumblebee-openrc'
@@ -45,9 +45,10 @@ pkgname=(
 #         'redis-openrc'
 #         'dnscrypt-proxy-openrc'
 #         'gitlab-openrc'
-        'grafana-openrc'
+#         'grafana-openrc'
+        'fwknop-openrc'
 )
-pkgver=20170904
+pkgver=20170911
 pkgrel=1
 pkgdesc="OpenRC init scripts"
 arch=('any')
@@ -136,6 +137,8 @@ source=(
 		'gitlab-workhorse.'{initd,confd}
 		"grafana.confd::${_url}/www-apps/grafana-bin/files/grafana.confd"
         "grafana.initd::${_url}/www-apps/grafana-bin/files/grafana.initd.3"
+        "fwknopd.confd::${_url}/net-firewall/fwknop/files/fwknopd.confd"
+        "fwknopd.initd::${_url}/net-firewall/fwknop/files/fwknopd.init"
 )
 
 # pkgver() {
@@ -567,6 +570,15 @@ package_grafana-openrc() {
         -i "${pkgdir}/etc/init.d/grafana"
 }
 
+package_fwknop-openrc() {
+    pkgdesc="OpenRC fwknop init script"
+    depends=('openrc' 'fwknop')
+    backup=('etc/conf.d/fwknop')
+
+    _inst_confd 'fwknop'
+    _inst_initd 'fwknop'
+}
+
 sha256sums=('3755d4eb8bb64a1304e5defedb949305ac550565da36fe4f94d5f31beee821ba'
             '5dcf5721a129b3782c13fc453853c390c34e2ad4ee00706388ce014454b063ee'
             '5ee23ee05da536fb67456c034e757841b27bc8528d93d2bc835e7427fe77d05e'
@@ -652,4 +664,6 @@ sha256sums=('3755d4eb8bb64a1304e5defedb949305ac550565da36fe4f94d5f31beee821ba'
             'e16621643cdb4225d4ea77f81dffeb9180b62c80f2ef6f304e9423b499e49ffe'
             'f891b336afe3fdb992821fe3f4facb95263987f8ffd61de06cb3622930bb938d'
             '5b9e125f2648ed98125097770b609dcce543443f0862b99c0653f55b3b9be895'
-            '0f898484e081a416429d4a881c99988aea6a9d9d2085b326c5dd1e85163cbb39')
+            '0f898484e081a416429d4a881c99988aea6a9d9d2085b326c5dd1e85163cbb39'
+            '818366d8012cf50771ab427bcf645de697e7d05e4bb80d5eb2f98291e071d510'
+            'ace9569324d049a226d09c91373644c0181e7f714eebd5bacd13c04e2d5fa093')
