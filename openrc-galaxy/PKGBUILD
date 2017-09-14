@@ -4,7 +4,7 @@
 _url="https://raw.githubusercontent.com/gentoo/gentoo/master"
 
 _sed_args=(-e 's|/var/run|/run|g' -e 's|/usr/sbin|/usr/bin|g')
-prefix=true
+_prefix=true
 
 $_prefix && _sed_args+=(-e 's|#!/sbin/openrc-run|#!/usr/bin/openrc-run|g')
 
@@ -50,7 +50,7 @@ pkgname=(
 #        'fwknop-openrc'
 	'prometheus-openrc'
 )
-pkgver=20170911
+pkgver=20170914
 pkgrel=1
 pkgdesc="OpenRC init scripts"
 arch=('any')
