@@ -28,11 +28,11 @@ build() {
   make build
 }
 
-check() {
-  export GOPATH="$srcdir/gopath"
-  cd "$GOPATH/src/github.com/prometheus/$pkgname"
-  make test
-}
+# check() {
+  # export GOPATH="$srcdir/gopath"
+  # cd "$GOPATH/src/github.com/prometheus/$pkgname"
+  # make test
+# }
 
 package() {
   install -Dm644 "$pkgname.sysusers" "$pkgdir/usr/lib/sysusers.d/$pkgname.conf"
