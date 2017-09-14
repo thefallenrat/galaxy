@@ -1,4 +1,5 @@
 # Maintainer: artoo <artoo@manjaro.org>
+# Contributor: Oscar Campos <damnwidget@artixlinux.org>
 
 _url="https://raw.githubusercontent.com/gentoo/gentoo/master"
 
@@ -46,7 +47,8 @@ pkgname=(
 #         'dnscrypt-proxy-openrc'
 #         'gitlab-openrc'
 #         'grafana-openrc'
-        'fwknop-openrc'
+#        'fwknop-openrc'
+	'prometheus-openrc'
 )
 pkgver=20170911
 pkgrel=1
@@ -139,6 +141,8 @@ source=(
         "grafana.initd::${_url}/www-apps/grafana-bin/files/grafana.initd.3"
         "fwknop.confd::${_url}/net-firewall/fwknop/files/fwknopd.confd"
         "fwknop.initd::${_url}/net-firewall/fwknop/files/fwknopd.init"
+        "prometheus.confd::${_url}/net-analyzer/prometheus/files/prometheus.confd"
+        "prometheus.initd::${_url}/net-analyzer/prometheus/files/prometheus.initd"
 )
 
 # pkgver() {
@@ -579,6 +583,15 @@ package_fwknop-openrc() {
     _inst_initd 'fwknop'
 }
 
+package_prometheus-openrc() {
+    pkgdesc="OpenRC prometheus init script"
+    depends=('openrc' 'prometheus')
+    backup=('etc/conf.d/prometheus')
+
+    _inst_confd 'prometheus'
+    _inst_initd 'prometheus'
+}
+
 sha256sums=('3755d4eb8bb64a1304e5defedb949305ac550565da36fe4f94d5f31beee821ba'
             '5dcf5721a129b3782c13fc453853c390c34e2ad4ee00706388ce014454b063ee'
             '5ee23ee05da536fb67456c034e757841b27bc8528d93d2bc835e7427fe77d05e'
@@ -666,4 +679,6 @@ sha256sums=('3755d4eb8bb64a1304e5defedb949305ac550565da36fe4f94d5f31beee821ba'
             '5b9e125f2648ed98125097770b609dcce543443f0862b99c0653f55b3b9be895'
             '0f898484e081a416429d4a881c99988aea6a9d9d2085b326c5dd1e85163cbb39'
             '818366d8012cf50771ab427bcf645de697e7d05e4bb80d5eb2f98291e071d510'
-            'ace9569324d049a226d09c91373644c0181e7f714eebd5bacd13c04e2d5fa093')
+            'ace9569324d049a226d09c91373644c0181e7f714eebd5bacd13c04e2d5fa093'
+            '940f1a3ad08f0eb370951b1a42c29a9217cba9ae2f5cb6cc675bdec1d51e8309'
+            '1ce4638a6b047ea5a8dba696c56d544b07a3f1efba9886aebc8fed7a1a68adab')
