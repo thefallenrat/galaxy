@@ -11,7 +11,7 @@ url='https://www.docker.com/'
 license=('Apache')
 depends=('glibc' 'bridge-utils' 'iproute2' 'device-mapper' 'sqlite'
          'libseccomp' 'libtool')
-makedepends=('git' 'go' 'btrfs-progs' 'cmake' 'openrc')
+makedepends=('git' 'go' 'btrfs-progs' 'cmake')
 optdepends=('btrfs-progs: btrfs backend support'
             'lxc: lxc backend support')
 # don't strip binaries! A sha1 is used to check binary consistency.
