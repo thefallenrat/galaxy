@@ -11,7 +11,7 @@ url='https://www.docker.com/'
 license=('Apache')
 depends=('glibc' 'bridge-utils' 'iproute2' 'device-mapper' 'sqlite'
          'libseccomp' 'libtool')
-makedepends=('git' 'go' 'btrfs-progs' 'cmake' 'openrc' 'libsystemd-dummy')
+makedepends=('git' 'go' 'btrfs-progs' 'cmake' 'openrc')
 optdepends=('btrfs-progs: btrfs backend support'
             'lxc: lxc backend support')
 # don't strip binaries! A sha1 is used to check binary consistency.
@@ -86,7 +86,7 @@ build() {
   msg2 'Building daemon'
   _fake_gopath_pushd docker-ce/components/engine github.com/docker/docker
   DOCKER_GITCOMMIT=$(cd "$srcdir"/docker-ce && git rev-parse --short HEAD) \
-    DOCKER_BUILDTAGS='seccomp journald' \
+    DOCKER_BUILDTAGS='seccomp' \
     VERSION=$pkgver-ce \
     hack/make.sh dynbinary
   _fake_gopath_popd
