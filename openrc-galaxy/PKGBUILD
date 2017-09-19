@@ -48,9 +48,10 @@ pkgname=(
 #         'gitlab-openrc'
 #         'grafana-openrc'
 #        'fwknop-openrc'
-	'prometheus-openrc'
+#        'prometheus-openrc'
+         'docker-openrc'
 )
-pkgver=20170914
+pkgver=20170919
 pkgrel=1
 pkgdesc="OpenRC init scripts"
 arch=('any')
@@ -143,6 +144,8 @@ source=(
         "fwknop.initd::${_url}/net-firewall/fwknop/files/fwknopd.init"
         "prometheus.confd::${_url}/net-analyzer/prometheus/files/prometheus.confd"
         "prometheus.initd::${_url}/net-analyzer/prometheus/files/prometheus.initd"
+        "docker.confd::https://raw.githubusercontent.com/docker/docker-ce/master/components/engine/contrib/init/openrc/docker.confd"
+        "docker.initd::https://raw.githubusercontent.com/docker/docker-ce/master/components/engine/contrib/init/openrc/docker.initd"
 )
 
 # pkgver() {
@@ -592,13 +595,22 @@ package_prometheus-openrc() {
     _inst_initd 'prometheus'
 }
 
+package_docker-openrc() {
+    pkgdesc="OpenRC docker init script"
+    depends=('openrc' 'docker')
+    backup=('etc/conf.d/docker')
+
+    _inst_confd 'docker'
+    _inst_initd 'docker'
+}
+
 sha256sums=('3755d4eb8bb64a1304e5defedb949305ac550565da36fe4f94d5f31beee821ba'
             '5dcf5721a129b3782c13fc453853c390c34e2ad4ee00706388ce014454b063ee'
             '5ee23ee05da536fb67456c034e757841b27bc8528d93d2bc835e7427fe77d05e'
             '916f4b14095ee4ec8a510391c883e9f01868e18d79a3d5cbeb13a104a793d45d'
             '3678565083106e698ca30c305c4561152a2b043fe894b8b773b28a0bb273411e'
-            '91fb1497b3a6ef0bb3a3d5baefdff801d8ff1cba27aaf742303415550814a09b'
-            'e3ddd2620be927f66e9fb325ad3dbe89e7845b5a30de09fbe25fad2d13df641b'
+            '40803821f498267f6567436eedc18201b5ae4b5390d6872fb15a94200c2ac06f'
+            'cdccb5f0009d1498be90a3f423158d7a3c603a1398f8993ae6fb828224a7cdaa'
             '81c0bf86e26770ae9e522fcce86ab05528d37ce8ad3ce1bcf17250bbd0285a6a'
             '7a2e3996dd9dd02307b11ffb2dca8915490283820a6b6c124d808a38badcc505'
             '507d8f26bdb7227c39ed0641429d32972513e4240bf59a20b076e8019201b20d'
@@ -681,4 +693,6 @@ sha256sums=('3755d4eb8bb64a1304e5defedb949305ac550565da36fe4f94d5f31beee821ba'
             '818366d8012cf50771ab427bcf645de697e7d05e4bb80d5eb2f98291e071d510'
             'ace9569324d049a226d09c91373644c0181e7f714eebd5bacd13c04e2d5fa093'
             '940f1a3ad08f0eb370951b1a42c29a9217cba9ae2f5cb6cc675bdec1d51e8309'
-            '1ce4638a6b047ea5a8dba696c56d544b07a3f1efba9886aebc8fed7a1a68adab')
+            '1ce4638a6b047ea5a8dba696c56d544b07a3f1efba9886aebc8fed7a1a68adab'
+            '89ac9f1c389dd570deb9bc6128886df8924f7a1a3e2e5e66437e21ccba76d06b'
+            'af1cb0f7cd6c4481bc023462d3a45d32e0975476cf881d543ecfb51c77c8c01c')
