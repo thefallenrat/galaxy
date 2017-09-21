@@ -593,6 +593,9 @@ package_prometheus-openrc() {
 
     _inst_confd 'prometheus'
     _inst_initd 'prometheus'
+
+    sed -e "s/:-config\.file/:--config\.file/g" \
+        -i "${pkgdir}/etc/init.d/prometheus"
 }
 
 package_docker-openrc() {
