@@ -33,6 +33,12 @@ prepare() {
     fi
   done
   :
+
+  msg2 "Rebuilding prometheus web bindata..."
+  go get -u github.com/jteeuwen/go-bindata/...
+  cd "$srcdir/$pkgname-$pkgver"
+  ../gopath/bin/go-bindata -pkg ui -o web/ui/bindata.go -ignore '(.*\.map|bootstrap\.js|bootstrap-theme\.css|bootstrap\.css)'  web/ui/templates/... web/ui/static/...
+  go fmt ./web/ui
 }
 
 build() {
