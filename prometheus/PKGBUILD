@@ -13,7 +13,7 @@ source=("https://github.com/prometheus/$pkgname/archive/v$pkgver.tar.gz"
 	"${pkgname}.sysusers"
   "${pkgname}.tmpfiles"
 	"fix-go1.9-disallowed-html-escaper-in-targets.patch")
-md5sums=('c90832267d4ec72bcb9bc291bdc22c96'
+md5sums=('SKIP'
          '9afdaba8dc6fb0632bfd797563d5fcdd'
          'e4961723077b6da0fd6ff1e480635789'
          '44a7ab282a9b4ca1af3a9f8a972895ef')
