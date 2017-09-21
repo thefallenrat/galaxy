@@ -1,1 +1,2 @@
-u prometheus - - /var/lib/prometheus
+u prometheus - "Prometheus monitoring system"  /var/lib/prometheus
+g prometheus -

@@ -10,9 +10,13 @@ license=('APACHE')
 makedepends=('go' 'git')
 backup=("etc/prometheus/prometheus.yml")
 source=("https://github.com/prometheus/$pkgname/archive/v$pkgver.tar.gz"
-	"${pkgname}.sysusers")
-md5sums=('SKIP'
-         'd47d5a96bd1f807447537fb644fb1a79')
+	"${pkgname}.sysusers"
+  "${pkgname}.tmpfiles"
+	"fix-go1.9-disallowed-html-escaper-in-targets.patch")
+md5sums=('c90832267d4ec72bcb9bc291bdc22c96'
+         '9afdaba8dc6fb0632bfd797563d5fcdd'
+         'e4961723077b6da0fd6ff1e480635789'
+         '44a7ab282a9b4ca1af3a9f8a972895ef')
 
 prepare() {
   # create gopath and link sources
@@ -20,6 +24,15 @@ prepare() {
   export GOPATH="$srcdir/gopath"
   mkdir -p "$GOPATH/src/github.com/prometheus/"
   ln -fsrT "$srcdir/$pkgname-$pkgver/" "$GOPATH/src/github.com/prometheus/$pkgname"
+
+  cd "$GOPATH/src/github.com/prometheus/$pkgname"
+  for filename in "${source[@]}"; do
+    if [[ "$filename" =~ \.patch$ ]]; then
+      msg2 "Applying patch ${filename##*/}"
+      patch -Np 1 -i "$srcdir/${filename##*/}"
+    fi
+  done
+  :
 }
 
 build() {
@@ -36,17 +49,20 @@ build() {
 
 package() {
   install -Dm644 "$pkgname.sysusers" "$pkgdir/usr/lib/sysusers.d/$pkgname.conf"
+  install -Dm644 "$pkgname.tmpfiles" "$pkgdir/usr/lib/tmpfiles.d/$pkgname.conf"
+
   cd $pkgname-$pkgver
   install -Dsm755 prometheus "$pkgdir/usr/bin/$pkgname"
   install -Dsm755 promtool "$pkgdir/usr/bin/promtool"
   install -dm755 "$pkgdir/etc/$pkgname"
-  install -dm750 "$pkgdir/var/lib/prometheus/"
   install -m644 "documentation/examples/prometheus.yml" "$pkgdir/etc/prometheus"
   install -dm755 "$pkgdir/usr/share/prometheus"
+
   cp -r consoles "$pkgdir/usr/share/prometheus"
   cp -r console_libraries "$pkgdir/usr/share/prometheus"
   ln -s /usr/share/prometheus/consoles "$pkgdir/etc/prometheus/consoles"
   ln -s /usr/share/prometheus/console_libraries "$pkgdir/etc/prometheus/console_libraries"
+
   install -dm755 "$pkgdir/usr/share/prometheus/web"
   cp -r web/* "$pkgdir/usr/share/prometheus/web"
 }
