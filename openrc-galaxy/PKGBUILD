@@ -50,8 +50,9 @@ pkgname=(
         'fwknop-openrc'
         'prometheus-openrc'
         'docker-openrc'
+        'rng-tools-openrc'
 )
-pkgver=20170919
+pkgver=20170924
 pkgrel=1
 pkgdesc="OpenRC init scripts"
 arch=('any')
@@ -146,6 +147,7 @@ source=(
         "prometheus.initd::${_url}/net-analyzer/prometheus/files/prometheus.initd"
         "docker.confd::https://raw.githubusercontent.com/docker/docker-ce/master/components/engine/contrib/init/openrc/docker.confd"
         "docker.initd::https://raw.githubusercontent.com/docker/docker-ce/master/components/engine/contrib/init/openrc/docker.initd"
+        "rngd.initd::${_url}/sys-apps/rng-tools/files/rngd-initd-r1-4.1"
 )
 
 # pkgver() {
@@ -607,6 +609,13 @@ package_docker-openrc() {
     _inst_initd 'docker'
 }
 
+package_rng-tools-openrc() {
+    pkgdesc="OpenRC rng-tools init script"
+    depends=('openrc' 'rng-tools')
+
+    _inst_initd 'rngd'
+}
+
 sha256sums=('3755d4eb8bb64a1304e5defedb949305ac550565da36fe4f94d5f31beee821ba'
             '5dcf5721a129b3782c13fc453853c390c34e2ad4ee00706388ce014454b063ee'
             '5ee23ee05da536fb67456c034e757841b27bc8528d93d2bc835e7427fe77d05e'
@@ -698,4 +707,5 @@ sha256sums=('3755d4eb8bb64a1304e5defedb949305ac550565da36fe4f94d5f31beee821ba'
             '940f1a3ad08f0eb370951b1a42c29a9217cba9ae2f5cb6cc675bdec1d51e8309'
             '1ce4638a6b047ea5a8dba696c56d544b07a3f1efba9886aebc8fed7a1a68adab'
             '89ac9f1c389dd570deb9bc6128886df8924f7a1a3e2e5e66437e21ccba76d06b'
-            'af1cb0f7cd6c4481bc023462d3a45d32e0975476cf881d543ecfb51c77c8c01c')
+            'af1cb0f7cd6c4481bc023462d3a45d32e0975476cf881d543ecfb51c77c8c01c'
+            '3ad9a52d86e54eb755923242b1314584d5c66ab55221f6063a16c23477957a25')
