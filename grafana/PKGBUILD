@@ -4,7 +4,7 @@
 # Contributor: Gilles Hamel <hamelg at laposte dot net>
 
 pkgname=grafana
-pkgver=4.5.1
+pkgver=4.5.2
 pkgrel=1
 pkgdesc='Gorgeous metric viz, dashboards & editors for Graphite, InfluxDB & OpenTSDB'
 url='http://grafana.org'
@@ -20,7 +20,7 @@ source=("git+https://github.com/grafana/grafana.git#tag=v$pkgver"
 install=$pkgname.install
 md5sums=('SKIP'
          'e991d8cdf91c1e25652cdbc51fc726c5'
-         'a23177c9e555a7d8ede65c86cf21add2')
+         'b9b576d1959fc063b3399892e201488c')
 
 prepare() {
   cd $pkgname
