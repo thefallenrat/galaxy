@@ -12,7 +12,6 @@ license=('GPL')
 depends=('libgcrypt')
 backup=(etc/conf.d/rngd)
 source=("https://downloads.sourceforge.net/sourceforge/gkernel/$pkgname-$pkgver.tar.gz"
-        "rngd.confd::https://raw.githubusercontent.com/gentoo/gentoo/master/sys-apps/rng-tools/files/rngd-confd-4.1"
         "rngd-test-signal-in-loop.patch")
 
 prepare() {
@@ -29,9 +28,7 @@ build() {
 package() {
 	cd "$srcdir"/$pkgname-$pkgver
 	make DESTDIR="$pkgdir" install
-	install -Dm0644 "$srcdir"/rngd.confd "$pkgdir"/etc/conf.d/rngd
 }
 
 sha256sums=('60a102b6603bbcce2da341470cad42eeaa9564a16b4490e7867026ca11a3078e'
-            'cdbd39f7446f12a9b78e87e9f135cfd0f6f364c4fa4ade0c96084b85c32afc38'
             'f5464e986008e851648c81132e0cee03ba9c6e8ff816bf2a1621f339aa3016e1')
