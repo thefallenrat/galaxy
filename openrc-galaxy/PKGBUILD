@@ -10,49 +10,50 @@ $_prefix && _sed_args+=(-e 's|#!/sbin/openrc-run|#!/usr/bin/openrc-run|g')
 
 pkgbase=openrc-galaxy
 pkgname=(
-        'acpid-openrc'
-        'autofs-openrc'
-        'hostapd-openrc'
-        'openntpd-openrc'
-        'polipo-openrc'
-        'privoxy-openrc'
-        'squid-openrc'
-        'ufw-openrc'
-        'vsftpd-openrc'
-        'tor-openrc'
-        'syncthing-openrc'
-        'vnstat-openrc'
-        'unbound-openrc'
-        'cpupower-openrc'
-        'connman-openrc'
-        'fcron-openrc'
-        'rsyslog-openrc'
-        'salt-openrc'
-        'thermald-openrc'
-        'xe-guest-utilities-openrc'
-        'boinc-openrc'
-        'at-openrc'
-        'libvirt-openrc'
-        'cgmanager-openrc'
-        'virtualbox-guest-utils-openrc'
-        'jenkins-openrc'
-        'espeakup-openrc'
-        'tlp-openrc'
-        'bumblebee-openrc'
-        'znc-openrc'
-        'ddclient-openrc'
-        'apcupsd-openrc'
-        'sshguard-openrc'
-        'redis-openrc'
-        'dnscrypt-proxy-openrc'
-        'gitlab-openrc'
-        'grafana-openrc'
-        'fwknop-openrc'
-        'prometheus-openrc'
-        'docker-openrc'
-        'rng-tools-openrc'
+#         'acpid-openrc'
+#         'autofs-openrc'
+#         'hostapd-openrc'
+#         'openntpd-openrc'
+#         'polipo-openrc'
+#         'privoxy-openrc'
+#         'squid-openrc'
+#         'ufw-openrc'
+#         'vsftpd-openrc'
+#         'tor-openrc'
+#         'syncthing-openrc'
+#         'vnstat-openrc'
+#         'unbound-openrc'
+#         'cpupower-openrc'
+#         'connman-openrc'
+#         'fcron-openrc'
+#         'rsyslog-openrc'
+#         'salt-openrc'
+#         'thermald-openrc'
+#         'xe-guest-utilities-openrc'
+#         'boinc-openrc'
+#         'at-openrc'
+#         'libvirt-openrc'
+#         'cgmanager-openrc'
+#         'virtualbox-guest-utils-openrc'
+#         'jenkins-openrc'
+#         'espeakup-openrc'
+#         'tlp-openrc'
+#         'bumblebee-openrc'
+#         'znc-openrc'
+#         'ddclient-openrc'
+#         'apcupsd-openrc'
+#         'sshguard-openrc'
+#         'redis-openrc'
+#         'dnscrypt-proxy-openrc'
+#         'gitlab-openrc'
+#         'grafana-openrc'
+#         'fwknop-openrc'
+#         'prometheus-openrc'
+#         'docker-openrc'
+#         'rng-tools-openrc'
+        'toxcore-openrc'
 )
-pkgver=20170924
+pkgver=20170925
 pkgrel=1
 pkgdesc="OpenRC init scripts"
 arch=('any')
@@ -149,6 +150,8 @@ source=(
         "docker.initd::https://raw.githubusercontent.com/docker/docker-ce/master/components/engine/contrib/init/openrc/docker.initd"
         "rngd.confd::${_url}/sys-apps/rng-tools/files/rngd-confd-4.1"
         "rngd.initd::${_url}/sys-apps/rng-tools/files/rngd-initd-r1-4.1"
+        "tox.confd::${_url}/net-libs/tox/files/confd"
+        "tox.initd::${_url}/net-libs/tox/files/initd"
 )
 
 # pkgver() {
@@ -613,9 +616,17 @@ package_docker-openrc() {
 package_rng-tools-openrc() {
     pkgdesc="OpenRC rng-tools init script"
     depends=('openrc' 'rng-tools')
-    
-    _inst_confd 'rngd'  
+
+    _inst_confd 'rngd'
     _inst_initd 'rngd'
+}
+
+package_toxcore-openrc() {
+    pkgdesc="OpenRC tox init script"
+    depends=('openrc' 'toxcore')
+
+    _inst_initd 'tox'
+    _inst_initd 'tox'
 }
 
 sha256sums=('3755d4eb8bb64a1304e5defedb949305ac550565da36fe4f94d5f31beee821ba'
@@ -711,4 +722,6 @@ sha256sums=('3755d4eb8bb64a1304e5defedb949305ac550565da36fe4f94d5f31beee821ba'
             '89ac9f1c389dd570deb9bc6128886df8924f7a1a3e2e5e66437e21ccba76d06b'
             'af1cb0f7cd6c4481bc023462d3a45d32e0975476cf881d543ecfb51c77c8c01c'
             'cdbd39f7446f12a9b78e87e9f135cfd0f6f364c4fa4ade0c96084b85c32afc38'
-            '3ad9a52d86e54eb755923242b1314584d5c66ab55221f6063a16c23477957a25')
+            '3ad9a52d86e54eb755923242b1314584d5c66ab55221f6063a16c23477957a25'
+            'eb0aa3b25232a64971c6b39799c384577cf85ffe16ec41119b6b4e8336649cd5'
+            '6d490b473102783ec9a491a9b7f4886d52393498e5495bca4d27a95fcbf35f52')
