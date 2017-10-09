@@ -1,8 +1,8 @@
 # Maintainer: Oscar Campos <damnwidget@artixlinux.org>
 
 pkgname=prometheus
-pkgver=1.7.1
-pkgrel=2
+pkgver=1.7.2
+pkgrel=1
 pkgdesc="Monitoring system and time series database."
 url="http://prometheus.io"
 arch=('i686' 'x86_64')
@@ -11,12 +11,10 @@ makedepends=('go' 'git')
 backup=("etc/prometheus/prometheus.yml")
 source=("https://github.com/prometheus/$pkgname/archive/v$pkgver.tar.gz"
 	"${pkgname}.sysusers"
-  "${pkgname}.tmpfiles"
-	"fix-go1.9-disallowed-html-escaper-in-targets.patch")
+  "${pkgname}.tmpfiles")
 md5sums=('SKIP'
          '9afdaba8dc6fb0632bfd797563d5fcdd'
-         'e4961723077b6da0fd6ff1e480635789'
-         '44a7ab282a9b4ca1af3a9f8a972895ef')
+         'e4961723077b6da0fd6ff1e480635789')
 
 prepare() {
   # create gopath and link sources
