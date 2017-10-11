@@ -1,6 +1,7 @@
-# Maintainer: graysky <graysky AT archlinux DOT us>
-# Contributer: Ionut Biru <ibiru@archlinux.org>
-# Contributer: Sébastien Luttringer <seblu@aur.archlinux.org>
+# Maintainer: Rafli Akmal <rafliakmaltejakusuma AT gmail DOT com>
+# Contributor: graysky <graysky AT archlinux DOT us>
+# Contributor: Ionut Biru <ibiru@archlinux.org>
+# Contributor: Sébastien Luttringer <seblu@aur.archlinux.org>
 pkgbase=(virtualbox-ck-modules)
 pkgname=(virtualbox-ck-host-modules virtualbox-ck-guest-modules)
 pkgver=5.1.28
@@ -11,7 +12,8 @@ license=('GPL')
 makedepends=('linux-ck-headers' "virtualbox-host-dkms>=$pkgver" "virtualbox-guest-dkms>=$pkgver" 'dkms')
 
 _extramodules=extramodules-4.12-ck
-_kernver="$(cat /usr/lib/modules/${_extramodules}/version)"
+# _kernver="$(cat /usr/lib/modules/${_extramodules}/version)"
+_kernver="4.12.14-1-ck"
 
 build() {
 	# dkms need modification to be run as user
@@ -39,7 +41,7 @@ package_virtualbox-ck-host-modules() {
 	cd "dkms/vboxhost/${pkgver}_OSE/$_kernver/$CARCH/module"
 	install -m644 * "$pkgdir/usr/lib/modules/$_extramodules"
 	sed -i -e "s/EXTRAMODULES='.*'/EXTRAMODULES='$_extramodules'/" "$startdir/host.install"
-	
+
 	# compress each module individually
 	find "$pkgdir" -name '*.ko' -exec gzip -9 {} +
 
@@ -64,7 +66,7 @@ package_virtualbox-ck-guest-modules() {
 	cd "dkms/vboxguest/${pkgver}_OSE/$_kernver/$CARCH/module"
 	install -m644 * "$pkgdir/usr/lib/modules/$_extramodules"
 	sed -i -e "s/EXTRAMODULES='.*'/EXTRAMODULES='$_extramodules'/" "$startdir/guest.install"
-	
+
 	# compress each module individually
 	find "$pkgdir" -name '*.ko' -exec gzip -9 {} +
 
