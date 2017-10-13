@@ -1,0 +1,34 @@
+# $Id$
+# Maintainer: Massimiliano Torromeo <massimiliano.torromeo@gmail.com>
+# Contributor: Alasdair Haswell <ali at arhaswell dot co dot uk>
+
+pkgname=rng-tools
+pkgver=5
+pkgrel=4
+pkgdesc="Random number generator related utilities"
+arch=('i686' 'x86_64')
+url="http://sourceforge.net/projects/gkernel/"
+license=('GPL')
+depends=('libgcrypt')
+backup=(etc/conf.d/rngd)
+source=("https://downloads.sourceforge.net/sourceforge/gkernel/$pkgname-$pkgver.tar.gz"
+        "rngd-test-signal-in-loop.patch")
+
+prepare() {
+	cd "$srcdir"/$pkgname-$pkgver
+	patch -p1 -i "$srcdir"/rngd-test-signal-in-loop.patch
+}
+
+build() {
+	cd "$srcdir"/$pkgname-$pkgver
+	./configure --prefix=/usr --sbindir=/usr/bin
+	make
+}
+
+package() {
+	cd "$srcdir"/$pkgname-$pkgver
+	make DESTDIR="$pkgdir" install
+}
+
+sha256sums=('60a102b6603bbcce2da341470cad42eeaa9564a16b4490e7867026ca11a3078e'
+            'f5464e986008e851648c81132e0cee03ba9c6e8ff816bf2a1621f339aa3016e1')

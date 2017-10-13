@@ -1,9 +1,10 @@
 # Maintainer: artoo <artoo@manjaro.org>
+# Contributor: Oscar Campos <damnwidget@artixlinux.org>
 
 _url="https://raw.githubusercontent.com/gentoo/gentoo/master"
 
 _sed_args=(-e 's|/var/run|/run|g' -e 's|/usr/sbin|/usr/bin|g')
-prefix=true
+_prefix=true
 
 $_prefix && _sed_args+=(-e 's|#!/sbin/openrc-run|#!/usr/bin/openrc-run|g')
 
@@ -34,19 +35,25 @@ pkgname=(
 #         'libvirt-openrc'
 #         'cgmanager-openrc'
 #         'virtualbox-guest-utils-openrc'
-        'jenkins-openrc'
-        'espeakup-openrc'
-        'tlp-openrc'
-        'bumblebee-openrc'
-        'znc-openrc'
-        'ddclient-openrc'
-        'apcupsd-openrc'
-        'sshguard-openrc'
-        'redis-openrc'
-        'dnscrypt-proxy-openrc'
-        'gitlab-openrc'
+#         'jenkins-openrc'
+#         'espeakup-openrc'
+#         'tlp-openrc'
+#         'bumblebee-openrc'
+#         'znc-openrc'
+#         'ddclient-openrc'
+#         'apcupsd-openrc'
+#         'sshguard-openrc'
+#         'redis-openrc'
+#         'dnscrypt-proxy-openrc'
+#         'gitlab-openrc'
+#         'grafana-openrc'
+#         'fwknop-openrc'
+#         'prometheus-openrc'
+#         'docker-openrc'
+#         'rng-tools-openrc'
+        'toxcore-openrc'
 )
-pkgver=20170823
+pkgver=20170925
 pkgrel=1
 pkgdesc="OpenRC init scripts"
 arch=('any')
@@ -133,11 +140,23 @@ source=(
 		'gitlab-sidekiq.'{initd,confd}
 		'gitlab-unicorn.'{initd,confd}
 		'gitlab-workhorse.'{initd,confd}
+		"grafana.confd::${_url}/www-apps/grafana-bin/files/grafana.confd"
+        "grafana.initd::${_url}/www-apps/grafana-bin/files/grafana.initd.3"
+        "fwknop.confd::${_url}/net-firewall/fwknop/files/fwknopd.confd"
+        "fwknop.initd::${_url}/net-firewall/fwknop/files/fwknopd.init"
+        "prometheus.confd::${_url}/net-analyzer/prometheus/files/prometheus.confd"
+        "prometheus.initd::${_url}/net-analyzer/prometheus/files/prometheus.initd"
+        "docker.confd::https://raw.githubusercontent.com/docker/docker-ce/master/components/engine/contrib/init/openrc/docker.confd"
+        "docker.initd::https://raw.githubusercontent.com/docker/docker-ce/master/components/engine/contrib/init/openrc/docker.initd"
+        "rngd.confd::${_url}/sys-apps/rng-tools/files/rngd-confd-4.1"
+        "rngd.initd::${_url}/sys-apps/rng-tools/files/rngd-initd-r1-4.1"
+        "tox.confd::${_url}/net-libs/tox/files/confd"
+        "tox.initd::${_url}/net-libs/tox/files/initd"
 )
 
-pkgver() {
-	date +%Y%m%d
-}
+# pkgver() {
+# 	date +%Y%m%d
+# }
 
 _inst_initd(){
     install -Dm755 ${srcdir}/$1.initd ${pkgdir}/etc/init.d/$1
@@ -490,11 +509,11 @@ package_apcupsd-openrc() {
     _inst_initd 'apcupsd'
     _inst_initd 'apcupsd.powerfail'
 
-    sed -e 's|/sbin|/usr/bin|g' \
-        -e 's|/bin|/usr/bin|g' \
+    sed -e 's| /sbin| /usr/bin|g' \
+        -e 's|	/bin|	/usr/bin|g' \
         -i "${pkgdir}/etc/init.d/apcupsd"
 
-    sed -e 's|/sbin|/usr/bin|g' \
+    sed -e 's|	/sbin|	/usr/bin|g' \
         -i "${pkgdir}/etc/init.d/apcupsd.powerfail"
 }
 
@@ -551,6 +570,65 @@ package_gitlab-openrc() {
     _inst_confd 'gitlab-workhorse'
     _inst_initd 'gitlab-workhorse'
 }
+
+package_grafana-openrc() {
+    pkgdesc="Grafana init script"
+    depends=('openrc' 'grafana')
+    backup=('etc/conf.d/grafana')
+
+    _inst_confd 'grafana'
+    _inst_initd 'grafana'
+
+    sed -e "s|/usr/sbin|/usr/bin|g" \
+        -i "${pkgdir}/etc/init.d/grafana"
+}
+
+package_fwknop-openrc() {
+    pkgdesc="OpenRC fwknop init script"
+    depends=('openrc' 'fwknop')
+    backup=('etc/conf.d/fwknop')
+
+    _inst_confd 'fwknop'
+    _inst_initd 'fwknop'
+}
+
+package_prometheus-openrc() {
+    pkgdesc="OpenRC prometheus init script"
+    depends=('openrc' 'prometheus')
+    backup=('etc/conf.d/prometheus')
+
+    _inst_confd 'prometheus'
+    _inst_initd 'prometheus'
+
+    sed -e "s/:-config\.file/:--config\.file/g" \
+        -i "${pkgdir}/etc/init.d/prometheus"
+}
+
+package_docker-openrc() {
+    pkgdesc="OpenRC docker init script"
+    depends=('openrc' 'docker')
+    backup=('etc/conf.d/docker')
+
+    _inst_confd 'docker'
+    _inst_initd 'docker'
+}
+
+package_rng-tools-openrc() {
+    pkgdesc="OpenRC rng-tools init script"
+    depends=('openrc' 'rng-tools')
+
+    _inst_confd 'rngd'
+    _inst_initd 'rngd'
+}
+
+package_toxcore-openrc() {
+    pkgdesc="OpenRC tox init script"
+    depends=('openrc' 'toxcore')
+
+    _inst_initd 'tox'
+    _inst_initd 'tox'
+}
+
 sha256sums=('3755d4eb8bb64a1304e5defedb949305ac550565da36fe4f94d5f31beee821ba'
             '5dcf5721a129b3782c13fc453853c390c34e2ad4ee00706388ce014454b063ee'
             '5ee23ee05da536fb67456c034e757841b27bc8528d93d2bc835e7427fe77d05e'
@@ -634,4 +712,16 @@ sha256sums=('3755d4eb8bb64a1304e5defedb949305ac550565da36fe4f94d5f31beee821ba'
             'fdf635bb2c84d65da55b8928ef3d54cef2d87f67c2a788b8e3b074b2f344f2de'
             'bc63d37d473378c88279e607865c5473daf1a66f3b4d1624b85d80823bba400b'
             'e16621643cdb4225d4ea77f81dffeb9180b62c80f2ef6f304e9423b499e49ffe'
-            'f891b336afe3fdb992821fe3f4facb95263987f8ffd61de06cb3622930bb938d')
+            'f891b336afe3fdb992821fe3f4facb95263987f8ffd61de06cb3622930bb938d'
+            '5b9e125f2648ed98125097770b609dcce543443f0862b99c0653f55b3b9be895'
+            '0f898484e081a416429d4a881c99988aea6a9d9d2085b326c5dd1e85163cbb39'
+            '818366d8012cf50771ab427bcf645de697e7d05e4bb80d5eb2f98291e071d510'
+            'ace9569324d049a226d09c91373644c0181e7f714eebd5bacd13c04e2d5fa093'
+            '940f1a3ad08f0eb370951b1a42c29a9217cba9ae2f5cb6cc675bdec1d51e8309'
+            '1ce4638a6b047ea5a8dba696c56d544b07a3f1efba9886aebc8fed7a1a68adab'
+            '89ac9f1c389dd570deb9bc6128886df8924f7a1a3e2e5e66437e21ccba76d06b'
+            'af1cb0f7cd6c4481bc023462d3a45d32e0975476cf881d543ecfb51c77c8c01c'
+            'cdbd39f7446f12a9b78e87e9f135cfd0f6f364c4fa4ade0c96084b85c32afc38'
+            '3ad9a52d86e54eb755923242b1314584d5c66ab55221f6063a16c23477957a25'
+            'eb0aa3b25232a64971c6b39799c384577cf85ffe16ec41119b6b4e8336649cd5'
+            '6d490b473102783ec9a491a9b7f4886d52393498e5495bca4d27a95fcbf35f52')
