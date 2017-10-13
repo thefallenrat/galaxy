@@ -1,16 +1,17 @@
 # $Id$
-# Maintainer: Chris Cromer <cromer@cromnix.org>
+# Maintainer: Rafli Akmal <rafliakmaltejakusuma AT gmail DOT com>
+# Contributor: Chris Cromer <cromer@cromnix.org>
 # Contributor: Sébastien Luttringer
 # Contributor: Ionut Biru <ibiru@archlinux.org>
 
 pkgbase=virtualbox-modules-artix
 pkgname=('virtualbox-host-modules-artix' 'virtualbox-guest-modules-artix')
 pkgver=5.1.28
-pkgrel=1
+pkgrel=2
 # remember to also adjust the .install file!
 _linux_major=4
 _linux_minor=9
-_linux_revision=44
+_linux_revision=56
 arch=('i686' 'x86_64')
 url='http://virtualbox.org'
 license=('GPL')
