@@ -12,8 +12,8 @@ license=('GPL')
 makedepends=('linux-ck-headers' "virtualbox-host-dkms>=$pkgver" "virtualbox-guest-dkms>=$pkgver" 'dkms')
 
 _extramodules=extramodules-4.12-ck
-_kernver="$(cat /usr/lib/modules/${_extramodules}/version)"
-# _kernver="4.12.14-1-ck"
+# _kernver="$(cat /usr/lib/modules/${_extramodules}/version)"
+_kernver="4.12.14-1-ck"
 
 build() {
 	# dkms need modification to be run as user
