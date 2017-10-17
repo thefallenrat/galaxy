@@ -6,8 +6,8 @@
 
 pkgbase=virtualbox-modules-artix
 pkgname=('virtualbox-host-modules-artix' 'virtualbox-guest-modules-artix')
-pkgver=5.1.28
-pkgrel=2
+pkgver=5.1.30
+pkgrel=1
 # remember to also adjust the .install file!
 _linux_major=4
 _linux_minor=9
@@ -75,6 +75,7 @@ package_virtualbox-guest-modules-artix(){
 }
 
 # vim:set ts=2 sw=2 et:
+
 
 
 
