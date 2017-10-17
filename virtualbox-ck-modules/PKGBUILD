@@ -4,16 +4,16 @@
 # Contributor: Sébastien Luttringer <seblu@aur.archlinux.org>
 pkgbase=(virtualbox-ck-modules)
 pkgname=(virtualbox-ck-host-modules virtualbox-ck-guest-modules)
-pkgver=5.1.28
-pkgrel=2
+pkgver=5.1.30
+pkgrel=1
 arch=('i686' 'x86_64')
 url='http://virtualbox.org'
 license=('GPL')
 makedepends=('linux-ck-headers' "virtualbox-host-dkms>=$pkgver" "virtualbox-guest-dkms>=$pkgver" 'dkms')
 
 _extramodules=extramodules-4.12-ck
-# _kernver="$(cat /usr/lib/modules/${_extramodules}/version)"
-_kernver="4.12.14-1-ck"
+_kernver="$(cat /usr/lib/modules/${_extramodules}/version)"
+# _kernver="4.12.14-1-ck"
 
 build() {
 	# dkms need modification to be run as user
@@ -75,3 +75,4 @@ package_virtualbox-ck-guest-modules() {
   printf "vboxguest\nvboxsf\nvboxvideo\n" >  \
 		"$pkgdir/usr/lib/modules-load.d/virtualbox-guest-modules-ck.conf"
 }
+
