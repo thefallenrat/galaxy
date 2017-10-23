@@ -1,19 +1,19 @@
-# Maintainer: Rafli Akmal <rafliakmaltejakusuma AT gmail DOT com> 
+# Maintainer: Rafli Akmal <rafliakmaltejakusuma AT gmail DOT com>
 # Contributor: graysky <graysky AT archlinux DOT us>
 # Contributor: Ionut Biru <ibiru@archlinux.org>
 # Contributor: Sébastien Luttringer <seblu@aur.archlinux.org>
 pkgbase=(virtualbox-ck-modules)
 pkgname=(virtualbox-ck-host-modules virtualbox-ck-guest-modules)
 pkgver=5.2.0
-pkgrel=1
+pkgrel=2
 arch=('i686' 'x86_64')
 url='http://virtualbox.org'
 license=('GPL')
-makedepends=('linux-ck-headers' "virtualbox-host-dkms>=$pkgver" "virtualbox-guest-dkms>=$pkgver" 'dkms')
+makedepends=('linux-ck-headers>=4.13.9' "virtualbox-host-dkms>=$pkgver" "virtualbox-guest-dkms>=$pkgver" 'dkms')
 
-_extramodules=extramodules-4.12-ck
+_extramodules=extramodules-4.13-ck
 # _kernver="$(cat /usr/lib/modules/${_extramodules}/version)"
-_kernver="4.12.14-1-ck"
+_kernver="4.13.9-1-ck"
 
 build() {
 	# dkms need modification to be run as user
