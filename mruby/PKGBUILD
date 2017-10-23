@@ -1,0 +1,40 @@
+# Maintainer: Oscar Campos <damnwidget@artixlinux.org>
+
+pkgname=mruby
+pkgver=1.3.0
+pkgrel=1
+pkgdesc="Lightweight implementation of the Ruby language"
+url='http://mruby.org'
+arch=('i686' 'x86_64')
+license=('MIT')
+depends=('readline')
+makedepends=('git' 'bison' 'ruby')
+source=("https://github.com/mruby/$pkgname/archive/$pkgver.tar.gz")
+md5sums=('9714dd2804064d0043e099b7211d72b9')
+
+build() {
+  cd mruby-$pkgver
+  make
+}
+
+check() {
+  cd mruby-$pkgver
+  make test
+}
+
+package() {
+  cd mruby-$pkgver
+
+  for tool in build/host/bin/*; do
+    install -Dsm755 "$tool" "$pkgdir/usr/bin/$(basename $tool)"
+  done
+
+  for lib in build/host/lib/*.a; do
+    install -Dsm644 "$lib" "$pkgdir/usr/lib/$(basename $lib)"
+  done
+
+  cp -r include "$pkgdir/usr"
+
+  install -d "$pkgdir/usr/share/licenses/mruby"
+  cp MITL "$pkgdir/usr/share/licenses/mruby/LICENSE"
+}
