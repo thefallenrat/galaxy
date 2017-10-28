@@ -7,14 +7,20 @@
 pkgname=bbswitch-lts
 _basename=bbswitch
 pkgver=0.8
-_extramodules=extramodules-4.9-lts # Don't forget to update bbswitch-lts.install
-pkgrel=39
+pkgrel=40
+_linux_major=4
+_linux_minor=9
+_linux_revision=59
+_extramodules=extramodules-${_linux_major}.${_linux_minor}-lts # Don't forget to update bbswitch-lts.install
 pkgdesc="Kernel module allowing to switch dedicated graphics card on Optimus laptops"
 arch=('i686' 'x86_64')
 url="http://github.com/Bumblebee-Project/bbswitch"
 license=('GPL')
-depends=('linux-lts>=4.9.58' 'linux-lts<4.10')
-makedepends=('linux-lts-headers>=4.9.58' 'linux-lts-headers<4.10' 'libelf')
+depends=("linux-lts>=${_linux_major}.${_linux_minor}.${_linux_revision}"
+         "linux-lts<${_linux_major}.$((_linux_minor+1))")
+makedepends=("linux-lts-headers>=${_linux_major}.${_linux_minor}.${_linux_revision}"
+             "linux-lts-headers<${_linux_major}.$((_linux_minor+1))"
+             "libelf")
 install=${pkgname}.install
 source=("${_basename}-$pkgver.tar.gz::https://github.com/Bumblebee-Project/bbswitch/archive/v${pkgver}.tar.gz")
 md5sums=('5b116b31ace3604ddf9d1fc1f4bc5807')
