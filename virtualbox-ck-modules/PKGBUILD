@@ -5,15 +5,24 @@
 pkgbase=(virtualbox-ck-modules)
 pkgname=(virtualbox-ck-host-modules virtualbox-ck-guest-modules)
 pkgver=5.2.0
-pkgrel=3
+pkgrel=4
+# remember to also adjust the .install file!
+_linux_major=4
+_linux_minor=13
+_linux_revision=10
 arch=('i686' 'x86_64')
 url='http://virtualbox.org'
 license=('GPL')
-makedepends=('linux-ck-headers>=4.13.9' "virtualbox-host-dkms>=$pkgver" "virtualbox-guest-dkms>=$pkgver" 'dkms')
-
-_extramodules=extramodules-4.13-ck
+makedepends=("linux-ck>=${_linux_major}.${_linux_minor}.${_linux_revision}"
+             "linux-ck<${_linux_major}.$((_linux_minor+1))"
+             "linux-ck-headers>=${_linux_major}.${_linux_minor}.${_linux_revision}"
+             "linux-ck-headers<${_linux_major}.$((_linux_minor+1))"
+             "virtualbox-host-dkms>=$pkgver" 
+             "virtualbox-guest-dkms>=$pkgver" 
+             "dkms")
+_extramodules=extramodules-${_linux_major}.${_linux_minor}-ck
 # _kernver="$(cat /usr/lib/modules/${_extramodules}/version)"
-_kernver="4.13.9-1-ck"
+_kernver="${_linux_major}.${_linux_minor}.${_linux_revision}-1-ck"
 
 build() {
 	# dkms need modification to be run as user
@@ -32,7 +41,8 @@ package_virtualbox-ck-host-modules() {
 	#pkgdesc="${_Hpkgdesc}"
 	pkgdesc='Host kernel modules for VirtualBox running under Linux-ck.'
 	provides=("VIRTUALBOX-HOST-MODULES")
-	depends=('linux-ck>=4.13' 'linux-ck<4.14')
+	depends=("linux-ck>=${_linux_major}.${_linux_minor}.${_linux_revision}"
+               "linux-ck<${_linux_major}.$((_linux_minor+1))")
 	#replaces=('virtualbox-ck-host-modules-corex')
 	#groups=('ck-generic')
 	install=host.install
@@ -57,7 +67,8 @@ package_virtualbox-ck-guest-modules() {
 	pkgdesc='Guest kernel modules for VirtualBox running under Linux-ck.'
 	license=('GPL')
 	provides=("VIRTUALBOX-GUEST-MODULES")
-	depends=('linux-ck>=4.13' 'linux-ck<4.14')
+	depends=("linux-ck>=${_linux_major}.${_linux_minor}.${_linux_revision}"
+               "linux-ck<${_linux_major}.$((_linux_minor+1))")
 	#replaces=('virtualbox-ck-guest-modules-corex')
 	#groups=('ck-generic')
 	install=guest.install
