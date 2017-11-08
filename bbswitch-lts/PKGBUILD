@@ -7,10 +7,10 @@
 pkgname=bbswitch-lts
 _basename=bbswitch
 pkgver=0.8
-pkgrel=41
+pkgrel=42
 _linux_major=4
 _linux_minor=9
-_linux_revision=60
+_linux_revision=61
 _extramodules=extramodules-${_linux_major}.${_linux_minor}-lts # Don't forget to update bbswitch-lts.install
 pkgdesc="Kernel module allowing to switch dedicated graphics card on Optimus laptops"
 arch=('i686' 'x86_64')
