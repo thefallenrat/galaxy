@@ -44,17 +44,17 @@ pkgname=(
 #         'apcupsd-openrc'
 #         'sshguard-openrc'
 #         'redis-openrc'
-#         'dnscrypt-proxy-openrc'
+          'dnscrypt-proxy-openrc'
 #         'gitlab-openrc'
 #         'grafana-openrc'
 #         'fwknop-openrc'
 #         'prometheus-openrc'
 #         'docker-openrc'
 #         'rng-tools-openrc'
-          'toxcore-openrc'
-          'pdnsd-openrc'
+#         'toxcore-openrc'
+#         'pdnsd-openrc'
 )
-pkgver=20171108
+pkgver=20171109
 pkgrel=1
 pkgdesc="OpenRC init scripts"
 arch=('any')
@@ -133,8 +133,8 @@ source=(
         "sshguard.initd::${_url}/app-admin/sshguard/files/sshguard.initd"
         "redis.confd::${_url}/dev-db/redis/files/redis.confd"
         "redis.initd::${_url}/dev-db/redis/files/redis.initd-4"
-        "dnscrypt-proxy.confd::${_url}/net-dns/dnscrypt-proxy/files/dnscrypt-proxy.confd"
-        "dnscrypt-proxy.initd::${_url}/net-dns/dnscrypt-proxy/files/dnscrypt-proxy.initd"
+        "dnscrypt-proxy.confd::${_url}/net-dns/dnscrypt-proxy/files/dnscrypt-proxy.confd-r1"
+        "dnscrypt-proxy.initd::${_url}/net-dns/dnscrypt-proxy/files/dnscrypt-proxy.initd-r1"
 		'gitlab-ci-multi-runner.'{initd,confd}
 		'gitlab-gitaly.'{initd,confd}
 		'gitlab-pages.'{initd,confd}
