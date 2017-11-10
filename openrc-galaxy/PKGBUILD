@@ -1,4 +1,5 @@
-# Maintainer: artoo <artoo@manjaro.org>
+# Maintainer: Rafli Akmal <rafliakmaltejakusuma@gmail.com>
+# Contributor: artoo <artoo@manjaro.org>
 # Contributor: Oscar Campos <damnwidget@artixlinux.org>
 
 _url="https://raw.githubusercontent.com/gentoo/gentoo/master"
@@ -44,7 +45,7 @@ pkgname=(
 #         'apcupsd-openrc'
 #         'sshguard-openrc'
 #         'redis-openrc'
-          'dnscrypt-proxy-openrc'
+#         'dnscrypt-proxy-openrc'
 #         'gitlab-openrc'
 #         'grafana-openrc'
 #         'fwknop-openrc'
@@ -53,8 +54,9 @@ pkgname=(
 #         'rng-tools-openrc'
 #         'toxcore-openrc'
 #         'pdnsd-openrc'
+          'dovecot-openrc'
 )
-pkgver=20171109
+pkgver=20171110
 pkgrel=1
 pkgdesc="OpenRC init scripts"
 arch=('any')
@@ -154,6 +156,7 @@ source=(
         "tox.confd::${_url}/net-libs/tox/files/confd"
         "tox.initd::${_url}/net-libs/tox/files/initd"
         "pdnsd.initd::${_url}/net-dns/pdnsd/files/pdnsd.rc8"
+        "dovecot.initd::${_url}/net-mail/dovecot/files/dovecot.init-r4"
 )
 
 # pkgver() {
@@ -640,6 +643,13 @@ package_pdnsd-openrc() {
     _inst_initd 'pdnsd'
 }
 
+package_dovecot-openrc() {
+    pkgdesc="OpenRC dovecot init script"
+    depends=('openrc' 'pdnsd')
+
+    _inst_initd 'dovecot'
+}
+
 sha256sums=('3755d4eb8bb64a1304e5defedb949305ac550565da36fe4f94d5f31beee821ba'
             '5dcf5721a129b3782c13fc453853c390c34e2ad4ee00706388ce014454b063ee'
             '5ee23ee05da536fb67456c034e757841b27bc8528d93d2bc835e7427fe77d05e'
@@ -734,4 +744,5 @@ sha256sums=('3755d4eb8bb64a1304e5defedb949305ac550565da36fe4f94d5f31beee821ba'
             '3ad9a52d86e54eb755923242b1314584d5c66ab55221f6063a16c23477957a25'
             'eb0aa3b25232a64971c6b39799c384577cf85ffe16ec41119b6b4e8336649cd5'
             '88fac7885b62e4aef89b2be52496912752c3bc14f543b6c4330a1077a31d5867'
-            '27b7bd5c0ec3bb026ccd2e47e7ac6f87869a9820bf4ba85a99d7cd4b1a3b826a')
+            '27b7bd5c0ec3bb026ccd2e47e7ac6f87869a9820bf4ba85a99d7cd4b1a3b826a'
+            '54f6710ea0560db3e62fb910662d8bbce71b330067dc856d17777115658f086c')
