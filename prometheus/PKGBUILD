@@ -1,7 +1,8 @@
-# Maintainer: Oscar Campos <damnwidget@artixlinux.org>
+# Maintainer : Rafli Akmal <rafliakmaltejakusuma@gmail.com>
+# Contributor: Oscar Campos <damnwidget@artixlinux.org>
 
 pkgname=prometheus
-pkgver=1.8.2
+pkgver=2.0.0
 pkgrel=1
 pkgdesc="Monitoring system and time series database."
 url="http://prometheus.io"
@@ -12,7 +13,7 @@ backup=("etc/prometheus/prometheus.yml")
 source=("https://github.com/prometheus/$pkgname/archive/v$pkgver.tar.gz"
 	"${pkgname}.sysusers"
   "${pkgname}.tmpfiles")
-md5sums=('bdce91807264533f27e706696fba5e3b'
+md5sums=('60be2bf2cce88a09a11dfe8c2bcd435d'
          '9afdaba8dc6fb0632bfd797563d5fcdd'
          'e4961723077b6da0fd6ff1e480635789')
 
