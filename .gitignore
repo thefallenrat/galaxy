@@ -7,3 +7,10 @@
 *.bz
 *.zip
 pdnsd/service
+fwknop/fwknopd.service
+grafana/grafana.service
+jenkins/jenkins.conf
+jenkins/jenkins.service
+rng-tools/rngd.conf
+rng-tools/rngd.service
+
