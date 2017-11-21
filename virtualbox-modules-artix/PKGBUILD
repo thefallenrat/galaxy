@@ -6,11 +6,11 @@
 pkgbase=virtualbox-modules-artix
 pkgname=('virtualbox-host-modules-artix' 'virtualbox-guest-modules-artix')
 pkgver=5.2.0
-pkgrel=7
+pkgrel=8
 # remember to also adjust the .install file!
 _linux_major=4
 _linux_minor=9
-_linux_revision=63
+_linux_revision=64
 arch=('x86_64')
 url='http://virtualbox.org'
 license=('GPL')
@@ -31,21 +31,18 @@ package_virtualbox-host-modules-artix(){
            "linux-lts<${_linux_major}.$((_linux_minor+1))")
   replaces=('virtualbox-modules' 'virtualbox-host-modules')
   conflicts=('virtualbox-modules' 'virtualbox-host-modules'
-			 'virtualbox-host-dkms')
+             'virtualbox-host-dkms')
   provides=('VIRTUALBOX-HOST-MODULES')
-  install=virtualbox-modules-artix.install
 
   cd "/var/lib/dkms/vboxhost/${pkgver}_OSE/$_kernver/$CARCH/module"
-  install -dm755 "$pkgdir/usr/lib/modules/$_extramodules/"
-  install -m644 * "$pkgdir/usr/lib/modules/$_extramodules/"
+  install -Dt "$pkgdir/usr/lib/modules/$_extramodules" -m644 *
 
-  # compress earch modules individually
-  find "$pkgdir" -name '*.ko' -exec gzip -9 {} +
+  # compress each module individually
+  find "$pkgdir" -name '*.ko' -exec gzip -n {} +
 
   # systemd module loading
-  install -Dm644 /dev/null "$pkgdir/usr/lib/modules-load.d/$pkgname.conf"
-  printf "vboxdrv\nvboxpci\nvboxnetadp\nvboxnetflt\n" >  \
-    "$pkgdir/usr/lib/modules-load.d/$pkgname.conf"
+  printf "vboxdrv\nvboxpci\nvboxnetadp\nvboxnetflt\n" |
+  install -Dm644 /dev/stdin "$pkgdir/usr/lib/modules-load.d/$pkgname.conf"
 }
 
 package_virtualbox-guest-modules-artix(){
@@ -58,19 +55,16 @@ package_virtualbox-guest-modules-artix(){
   conflicts=('virtualbox-archlinux-modules' 'virtualbox-guest-modules'
              'virtualbox-guest-dkms')
   provides=('VIRTUALBOX-GUEST-MODULES')
-  install=virtualbox-modules-artix.install
 
   cd "/var/lib/dkms/vboxguest/${pkgver}_OSE/$_kernver/$CARCH/module"
-  install -dm755 "$pkgdir/usr/lib/modules/$_extramodules/"
-  install -m644 * "$pkgdir/usr/lib/modules/$_extramodules/"
+  install -Dt "$pkgdir/usr/lib/modules/$_extramodules" -m644 *
 
-  # compress earch modules individually
-  find "$pkgdir" -name '*.ko' -exec gzip -9 {} +
+  # compress each module individually
+  find "$pkgdir" -name '*.ko' -exec gzip -n {} +
 
   # systemd module loading
-  install -Dm644 /dev/null "$pkgdir/usr/lib/modules-load.d/$pkgname.conf"
-  printf "vboxguest\nvboxsf\nvboxvideo\n" >  \
-    "$pkgdir/usr/lib/modules-load.d/$pkgname.conf"
+  printf "vboxguest\nvboxsf\nvboxvideo\n" |
+  install -Dm644 /dev/stdin "$pkgdir/usr/lib/modules-load.d/$pkgname.conf"
 }
 
 # vim:set ts=2 sw=2 et:
