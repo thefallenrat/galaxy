@@ -19,22 +19,21 @@ makedepends=("linux-ck>=${_linux_major}.${_linux_minor}.${_linux_revision}"
              "linux-ck-headers<${_linux_major}.$((_linux_minor+1))"
              "virtualbox-host-dkms>=$pkgver" 
              "virtualbox-guest-dkms>=$pkgver" 
-             "dkms")
+             "libelf")
 _extramodules=extramodules-${_linux_major}.${_linux_minor}-ck
 # _kernver="$(cat /usr/lib/modules/${_extramodules}/version)"
 _kernver="${_linux_major}.${_linux_minor}.${_linux_revision}-${_linux_rel}-ck"
 
-build() {
+#build() {
 	# dkms need modification to be run as user
-	cp -r /var/lib/dkms .
-	echo "dkms_tree='$srcdir/dkms'" > dkms.conf
+#	cp -r /var/lib/dkms .
+#	echo "dkms_tree='$srcdir/dkms'" > dkms.conf
 	# build host modules
-	msg2 'Host modules'
-	dkms --dkmsframework dkms.conf build "vboxhost/${pkgver}_OSE" -k "$_kernver"
+#	dkms --dkmsframework dkms.conf build "vboxhost/${pkgver}_OSE" -k "$_kernver"
 	# build guest modules
-	msg2 'Guest modules'
-	dkms --dkmsframework dkms.conf build "vboxguest/${pkgver}_OSE" -k "$_kernver"
-}
+#	msg2 'Guest modules'
+#	dkms --dkmsframework dkms.conf build "vboxguest/${pkgver}_OSE" -k "$_kernver"
+#}
 
 package_virtualbox-ck-host-modules() {
       pkgdesc='Host kernel modules for VirtualBox running under Linux-ck.'
@@ -42,7 +41,7 @@ package_virtualbox-ck-host-modules() {
       depends=("linux-ck>=${_linux_major}.${_linux_minor}.${_linux_revision}"
                "linux-ck<${_linux_major}.$((_linux_minor+1))")
 
-      cd "dkms/vboxhost/${pkgver}_OSE/$_kernver/$CARCH/module"
+      cd "/var/lib/dkms/vboxhost/${pkgver}_OSE/$_kernver/$CARCH/module"
       install -Dt "$pkgdir/usr/lib/modules/$_extramodules" -m644 *
 
       # compress each module individually
@@ -60,7 +59,7 @@ package_virtualbox-ck-guest-modules() {
       depends=("linux-ck>=${_linux_major}.${_linux_minor}.${_linux_revision}"
                "linux-ck<${_linux_major}.$((_linux_minor+1))")
 
-      cd "dkms/vboxguest/${pkgver}_OSE/$_kernver/$CARCH/module"
+      cd "/var/lib/dkms/vboxguest/${pkgver}_OSE/$_kernver/$CARCH/module"
       install -Dt "$pkgdir/usr/lib/modules/$_extramodules" -m644 *
 
       # compress each module individually
