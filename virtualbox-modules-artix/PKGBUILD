@@ -6,11 +6,10 @@
 pkgbase=virtualbox-modules-artix
 pkgname=('virtualbox-host-modules-artix' 'virtualbox-guest-modules-artix')
 pkgver=5.2.2
-pkgrel=1
-# remember to also adjust the .install file!
+pkgrel=2
 _linux_major=4
 _linux_minor=9
-_linux_revision=64
+_linux_revision=65
 arch=('x86_64')
 url='http://virtualbox.org'
 license=('GPL')
@@ -66,16 +65,3 @@ package_virtualbox-guest-modules-artix(){
   printf "vboxguest\nvboxsf\nvboxvideo\n" |
   install -Dm644 /dev/stdin "$pkgdir/usr/lib/modules-load.d/$pkgname.conf"
 }
-
-# vim:set ts=2 sw=2 et:
-
-
-
-
-
-
-
-
-
-
-
