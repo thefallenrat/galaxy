@@ -5,10 +5,10 @@
 pkgbase=(virtualbox-ck-modules)
 pkgname=(virtualbox-ck-host-modules virtualbox-ck-guest-modules)
 pkgver=5.2.2
-pkgrel=1
+pkgrel=2
 _linux_major=4
 _linux_minor=14
-_linux_revision=1
+_linux_revision=2
 _linux_rel=1
 arch=('x86_64')
 url='http://virtualbox.org'
