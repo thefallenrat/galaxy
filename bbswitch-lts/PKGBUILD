@@ -1,4 +1,3 @@
-# $Id: PKGBUILD 120281 2014-10-06 16:24:13Z tpowa $
 # Maintainer: Rafli Akmal <rafliakmaltejakusuma AT gmail DOT com>
 # Contributor: Sven-Hendrik Haase <sh@lutzhaase.com>
 # Contributor: M0Rf30
@@ -7,10 +6,10 @@
 pkgname=bbswitch-lts
 _basename=bbswitch
 pkgver=0.8
-pkgrel=44
+pkgrel=46
 _linux_major=4
 _linux_minor=9
-_linux_revision=63
+_linux_revision=65
 _extramodules=extramodules-${_linux_major}.${_linux_minor}-lts # Don't forget to update bbswitch-lts.install
 pkgdesc="Kernel module allowing to switch dedicated graphics card on Optimus laptops"
 arch=('x86_64')
