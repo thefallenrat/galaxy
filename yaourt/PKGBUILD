@@ -4,7 +4,7 @@
 
 pkgname=yaourt
 pkgver=1.9
-pkgrel=1
+pkgrel=2
 pkgdesc="A pacman wrapper with extended features and AUR support"
 arch=('any')
 url="https://github.com/archlinuxfr/$pkgname"
