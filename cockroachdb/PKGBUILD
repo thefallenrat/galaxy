@@ -6,14 +6,14 @@ pkgname=(
 	'cockroachdb-enterprise'
 )
 pkgdesc="Distributed and resilient SQL database built on a transactional and strongly-consistent key-value store"
-pkgver=1.1.2
+pkgver=1.1.3
 pkgrel=1
 arch=('x86_64')
 url="https://www.cockroachlabs.com/product/cockroachdb-core/"
 depends=('gcc-libs>=6.0')
 makedepends=('go' 'cmake' 'autoconf')
 source=("https://binaries.cockroachdb.com/cockroach-v$pkgver.src.tgz")
-md5sums=('d5ac9241dd1d3459f33d2da9793dd470')
+md5sums=('1a3bb161adb81d5f574207b6da1ad5f4')
 
 prepare() {
 	cp -ra "cockroach-v${pkgver}"{,-enterprise}

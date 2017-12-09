@@ -1,0 +1,17 @@
+# Maintainer: Rafli Akmal <thefallenrat@artixlinux.org>
+pkgbase=openrc-completions
+pkgname=('openrc-zsh-completions')
+pkgver=0.1
+pkgrel=1
+pkgdesc="completions scripts for openRC"
+arch=(any)
+url="https://github.com/artix-linux/openrc-completions"
+license=('free')
+source=("https://github.com/artix-linux/$pkgbase/archive/$pkgver.tar.gz")
+sha256sums=('6652f1e1d3b5f2d06a9439f8434e2b50567414b8daebfad64e796ce29de10672')
+
+package_openrc-zsh-completions() {
+	pkgdesc="openRC completions script for ZSH shell"
+	depends=(zsh)
+	install -Dm644 $srcdir/$pkgbase-$pkgver/zsh/_openrc $pkgdir/usr/share/zsh/site-functions/_openrc
+}
