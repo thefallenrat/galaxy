@@ -33,3 +33,5 @@ package() {
   install -Dm644 jenkins.tmpfiles "$pkgdir/usr/lib/tmpfiles.d/jenkins.conf"
   install -Dm644 jenkins.sysusers "$pkgdir/usr/lib/sysusers.d/jenkins.conf"
 }
+
+# vim:set ts=2 sw=2 et:
