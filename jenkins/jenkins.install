@@ -4,5 +4,4 @@ post_install() {
   # pacman hooks.
   sysusers jenkins.conf
   [[ -d var/lib/jenkins ]] || install -dm 750 -o jenkins -g jenkins var/lib/jenkins
-  [[ -d var/log/jenkins ]] || install -dm 755 -o jenkins -g jenkins var/log/jenkins
 }
