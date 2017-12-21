@@ -1,4 +1,5 @@
-# Maintainer: Lukas Fleischer <lfleischer@archlinux.org>
+# Maintainer: Rafli Akmal <thefallenrat@artixlinux.org>
+# Contributor: Lukas Fleischer <lfleischer@archlinux.org>
 # Contributor: xduugu
 # Contributor: nh2
 # Contributor: Steven Davidovitz <steviedizzle ð gmail đ com>
@@ -10,17 +11,25 @@
 pkgname=tp_smapi-lts
 _pkgname=tp-smapi
 pkgver=0.42
-_extradir=/usr/lib/modules/extramodules-4.9-lts
-pkgrel=24
+pkgrel=25
+_linux_major=4
+_linux_minor=9
+_linux_revision=71
+_linux_rel=1
 pkgdesc="Modules for ThinkPad's SMAPI functionality"
 arch=('x86_64')
 url='https://github.com/evgeni/tp_smapi'
 license=('GPL')
-depends=('linux-lts>=4.9.69' 'linux-lts<4.10')
-makedepends=('linux-lts-headers>=4.9.69' 'linux-lts-headers<4.10')
+depends=("linux-lts>=${_linux_major}.${_linux_minor}.${_linux_revision}"
+         "linux-lts<${_linux_major}.$((_linux_minor+1))")
+makedepends=("linux-lts>=${_linux_major}.${_linux_minor}.${_linux_revision}"
+             "linux-lts<${_linux_major}.$((_linux_minor+1))")
 install="$pkgname.install"
 source=("$_pkgname-$pkgver.tar.gz::https://github.com/evgeni/${pkgname/-lts/}/archive/$_pkgname/$pkgver.tar.gz")
 md5sums=('6a51d3aa459ad7a6ebfbb8c29527b3ee')
+
+_extradir="/usr/lib/modules/extramodules-${_linux_major}.${_linux_minor}-lts"
+_kernver="${_linux_major}.${_linux_minor}.${_linux_revision}-${_linux_rel}-lts"
 
 build() {
   cd ${pkgname/-lts/}-$_pkgname-$pkgver
@@ -28,7 +37,7 @@ build() {
   # https://bugs.archlinux.org/task/54975 (kernel has no _GLOBAL_OFFSET_TABLE_):
   # Clear EXTRA_CFLAGS since it defaults to injecting CFLAGS and -fno-plt breaks the modules
 
-  make HDAPS=1 KVER="$(<$_extradir/version)" EXTRA_CFLAGS=
+  make HDAPS=1 KVER="$_kernver" EXTRA_CFLAGS=
 }
 
 package() {
