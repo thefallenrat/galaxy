@@ -8,6 +8,7 @@ pkgrel=7
 _linux_major=4
 _linux_minor=9
 _linux_revision=71
+_linux_rel=1
 pkgdesc="A kernel module for Realtek 8168 network cards for linux-lts"
 url="http://www.realtek.com.tw"
 license=("GPL")
