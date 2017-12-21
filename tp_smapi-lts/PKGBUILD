@@ -22,8 +22,8 @@ url='https://github.com/evgeni/tp_smapi'
 license=('GPL')
 depends=("linux-lts>=${_linux_major}.${_linux_minor}.${_linux_revision}"
          "linux-lts<${_linux_major}.$((_linux_minor+1))")
-makedepends=("linux-lts>=${_linux_major}.${_linux_minor}.${_linux_revision}"
-             "linux-lts<${_linux_major}.$((_linux_minor+1))")
+makedepends=("linux-lts-headers>=${_linux_major}.${_linux_minor}.${_linux_revision}"
+             "linux-lts-headers<${_linux_major}.$((_linux_minor+1))")
 install="$pkgname.install"
 source=("$_pkgname-$pkgver.tar.gz::https://github.com/evgeni/${pkgname/-lts/}/archive/$_pkgname/$pkgver.tar.gz")
 md5sums=('6a51d3aa459ad7a6ebfbb8c29527b3ee')
