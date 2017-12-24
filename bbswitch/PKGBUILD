@@ -6,20 +6,28 @@
 pkgbase=bbswitch
 pkgname=(bbswitch bbswitch-dkms)
 pkgver=0.8
-pkgrel=94
+pkgrel=95
+_linux_major=4
+_linux_minor=14
+_linux_revision=8
+_linux_rel=1
 pkgdesc="Kernel module allowing to switch dedicated graphics card on Optimus laptops"
 arch=('i686' 'x86_64')
 url="http://github.com/Bumblebee-Project/bbswitch"
 license=('GPL')
-depends=('linux>=4.14' 'linux<4.15')
-makedepends=('linux-headers>=4.14' 'linux-headers<4.15' 'libelf')
-_extramodules=extramodules-4.14-ARTIX
+depends=("linux>=${_linux_major}.${_linux_minor}.${_linux_revision}"
+         "linux<${_linux_major}.$((_linux_minor+1))")
+makedepends=("linux-headers>=${_linux_major}.${_linux_minor}.${_linux_revision}"
+             "linux-headers<${_linux_major}.$((_linux_minor+1))"
+             "libelf")
 source=("${pkgbase}-${pkgver}.tar.gz::https://github.com/Bumblebee-Project/bbswitch/archive/v${pkgver}.tar.gz")
 md5sums=('5b116b31ace3604ddf9d1fc1f4bc5807')
 
+_extramodules=extramodules-${_linux_major}.${_linux_minor}-ARTIX
+_kernver="${_linux_major}.${_linux_minor}.${_linux_revision}-${_linux_rel}-ARTIX"
+
 build() {
   cd ${pkgbase}-${pkgver}
-  _kernver="$(cat /usr/lib/modules/${_extramodules}/version)"
   make KDIR=/lib/modules/${_kernver}/build
 }
 
