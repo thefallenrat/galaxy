@@ -1,0 +1,565 @@
+# Maintainer: Muhammad Herdiansyah <herdiansyah@netc.eu>
+
+_url="https://github.com/voidlinux/void-packages/raw/master/srcpkgs"
+
+_sed_args=(-e 's|/var/run|/run|g' -e 's|/usr/sbin|/usr/bin|g' -e 's|/opt/bin|/usr/bin|g' -e 's|/var/service|/run/runit/service|g' -e 's|/usr/libexec|/usr/lib|g')
+
+pkgbase=runscripts-galaxy
+pkgname=(
+        'acpid-runscripts'
+        'autofs-runscripts'
+        'hostapd-runscripts'
+        'openntpd-runscripts'
+        'polipo-runscripts'
+        'privoxy-runscripts'
+        'squid-runscripts'
+        'ufw-runscripts'
+        'vsftpd-runscripts'
+        'tor-runscripts'
+        'syncthing-runscripts'
+        'vnstat-runscripts'
+        'unbound-runscripts'
+#        'cpupower-runscripts'
+        'connman-runscripts'
+        'fcron-runscripts'
+        'rsyslog-runscripts'
+        'salt-runscripts'
+        'thermald-runscripts'
+#        'xe-guest-utilities-runscripts'
+        'boinc-runscripts'
+        'at-runscripts'
+        'libvirt-runscripts'
+        'cgmanager-runscripts'
+#        'virtualbox-guest-utils-runscripts'
+        'jenkins-runscripts'
+        'espeakup-runscripts'
+        'tlp-runscripts'
+        'bumblebee-runscripts'
+        'znc-runscripts'
+        'ddclient-runscripts'
+        'apcupsd-runscripts'
+#        'sshguard-runscripts'
+        'redis-runscripts'
+        'dnscrypt-proxy-runscripts'
+#        'gitlab-runscripts'
+        'grafana-runscripts'
+        'fwknop-runscripts'
+        'prometheus-runscripts'
+        'docker-runscripts'
+        'rng-tools-runscripts'
+        'toxcore-runscripts'
+        'pdnsd-runscripts'
+        'dovecot-runscripts'
+)
+pkgver=20180105
+pkgrel=1
+pkgdesc="daemontools-style service script for galaxy repository"
+arch=('any')
+url="https://github.com/martix-linux"
+license=('BSD3')
+# Note: While this PKGBUILD is licensed under BSD-3 terms, all of the
+#       included runscript should follow it's main package's licenses.
+groups=('runscripts-galaxy')
+conflicts=('systemd-sysvcompat')
+source=(
+        "acpid.run::${_url}/acpid/files/acpid/run"
+        "autofs.run::${_url}/autofs/files/autofs/run"
+        "hostapd.run::${_url}/hostapd/files/hostapd/run"
+        "openntpd.run::${_url}/openntpd/files/openntpd/run"
+        "logopenntpd.run::${_url}/openntpd/files/openntpd/log/run"
+        "polipo.run::${_url}/polipo/files/polipo/run"
+        "privoxy.run::${_url}/privoxy/files/privoxy/run"
+        "logprixovy.run::${_url}/privoxy/files/privoxy/log/run"
+        "squid.run::${_url}/squid/files/squid/run"
+        "ufw.run::${_url}/ufw/files/ufw/run"
+        "ufw.finish::${_url}/ufw/files/ufw/finish"
+        "vsftpd.run::${_url}/vsftpd/files/vsftpd/run"
+        "vsftpd-ipv6.run::${_url}/vsftpd/files/vsftpd-ipv6/run"
+        "tor.run::${_url}/tor/files/tor/run"
+        "relaysrv.run::${_url}/syncthing/files/relaysrv/run"
+        "logrelaysrv.run::${_url}/syncthing/files/relaysrv/log/run"
+        "vnstatd.run::${_url}/vnstat/files/vnstatd/run"
+        "unbound.run::${_url}/unbound/files/unbound/run"
+        "fcron.run::${_url}/fcron/files/fcron/run"
+#        "cpupower.confd::${_url}/sys-power/cpupower/files/conf.d-r2"
+#        "cpupower.initd::${_url}/sys-power/cpupower/files/init.d-r4"
+        "connmand.run::${_url}/connman/files/connmand/run"
+        "rsyslogd.run::${_url}/rsyslog/files/rsyslogd/run"
+        "salt-master.run::${_url}/salt/files/salt-master/run"
+        "salt-minion.run::${_url}/salt/files/salt-minion/run"
+        "salt-api.run::${_url}/salt/files/salt-api/run"
+        "salt-syndic.run::${_url}/salt/files/salt-syndic/run"
+        "thermald.run::${_url}/thermald/files/thermald/run"
+#        "xe-daemon.initd::${_url}/app-emulation/xe-guest-utilities/files/xe-daemon.initd"
+        "vboxservice.run"
+        "vboxservice.finish"
+        "boinc.conf::${_url}/boinc/files/boinc/conf"
+        "boinc.run::${_url}/boinc/files/boinc/run"
+        "at.run::${_url}/at/files/at/run"
+        "cgmanager.run::${_url}/cgmanager/files/cgmanager/run"
+        "jenkins.run::${_url}/jenkins/files/jenkins/run"
+        "espeakup.run::${_url}/espeakup/files/espeakup/run"
+        "libvirtd.run::${_url}/libvirt/files/libvirtd/run"
+        "loglibvirtd.run::${_url}/libvirt/files/libvirtd/log/run"
+#        "virtlockd.initd::${_url}/app-emulation/libvirt/files/virtlockd.init-r1"
+#        "virtlogd.initd::${_url}/app-emulation/libvirt/files/virtlogd.init-r1"
+#        "libvirt-guests.confd::${_url}/app-emulation/libvirt/files/libvirt-guests.confd"
+#        "libvirt-guests.initd::${_url}/app-emulation/libvirt/files/libvirt-guests.init-r2"
+        "tlp.run::${_url}/tlp/files/tlp/run"
+        "tlp.finish::${_url}/tlp/files/tlp/finish"
+        "bumblebeed.run::${_url}/bumblebee/files/bumblebeed/run"
+        "znc.run::${_url}/znc/files/znc/run"
+        "ddclient.run"
+        "apcupsd.run"
+        "sshguard-socklog.run::${_url}/sshguard/files/sshguard-socklog/run"
+        "redis.run::${_url}/redis/files/redis/run"
+        "dnscrypt-proxy.run::${_url}/dnscrypt-proxy/files/dnscrypt-proxy/run"
+        "logdnscrypt-proxy.run::${_url}/dnscrypt-proxy/files/dnscrypt-proxy/log/run"
+#        'gitlab-ci-multi-runner.'{initd,confd}
+#        'gitlab-gitaly.'{initd,confd}
+#        'gitlab-pages.'{initd,confd}
+#        'gitlab-sidekiq.'{initd,confd}
+#        'gitlab-unicorn.'{initd,confd}
+#        'gitlab-workhorse.'{initd,confd}
+        "grafana.run::${_url}/grafana/files/grafana/run"
+        "fwknopd.run::${_url}/fwknop/files/fwknopd/run"
+        "prometheus.run::${_url}/prometheus/files/prometheus/run"
+        "docker.run::${_url}/docker/files/docker/run"
+        "docker.logrun::${_url}/docker/files/docker/log/run"
+        "rngd.run::${_url}/rng-tools/files/rngd/run"
+        "toxbootstrapd.run::${_url}/toxcore/files/toxbootstrapd/run"
+        "pdnsd.run"
+        "dovecot.run::${_url}/dovecot/files/dovecot/run"
+)
+
+pkgver() {
+    date +%Y%m%d
+}
+
+
+_inst_logsv() {
+    for file in run finish check; do
+        if test -f "$srcdir/log$1.$file"; then
+            install -Dm755 "$srcdir/log$1.$file" "$pkgdir/etc/sv/$1/log/$file"
+            sed "${_sed_args[@]}" -i "$pkgdir/etc/sv/$1/log/$file"
+        fi
+    done
+}
+
+_inst_sv() {
+    if test -f "$srcdir/$1.conf"; then
+        install -Dm644 "$srcdir/$1.conf" "$pkgdir/etc/sv/$1/conf"
+    fi
+
+    for file in run finish check; do
+        if test -f "$srcdir/$1.$file"; then
+            install -Dm755 "$srcdir/$1.$file" "$pkgdir/etc/sv/$1/$file"
+            sed "${_sed_args[@]}" -i "$pkgdir/etc/sv/$1/$file"
+        fi
+    done
+}
+
+package_acpid-runscripts() {
+    pkgdesc="daemontools-style runscript for acpid"
+    depends=('acpid')
+
+    _inst_sv 'acpid'
+}
+
+package_autofs-runscripts() {
+    pkgdesc="daemontools-style runscript for autofs"
+    depends=('autofs')
+
+    _inst_sv 'autofs'
+}
+
+package_hostapd-runscripts() {
+    pkgdesc="daemontools-style runscript for hostapd"
+    depends=('hostapd')
+
+    _inst_sv 'hostapd'
+}
+
+package_openntpd-runscripts() {
+    pkgdesc="daemontools-style runscript for openntpd"
+    depends=('openntpd')
+    conflicts=('ntp' 'ntp-runscripts' 'systemd-sysvcompat')
+
+    _inst_sv 'openntpd'
+    _inst_logsv 'openntpd'
+}
+
+package_polipo-runscripts() {
+    pkgdesc="daemontools-style runscript for polipo"
+    depends=('polipo')
+
+    _inst_sv 'polipo'
+}
+
+package_privoxy-runscripts() {
+    pkgdesc="daemontools-style runscript for privoxy"
+    depends=('privoxy')
+
+    _inst_sv 'privoxy'
+    _inst_logsv 'privoxy'
+}
+
+package_squid-runscripts() {
+    pkgdesc="daemontools-style runscript for squid"
+    depends=('squid')
+#     optdepends=('bind-runscripts: bind initscript')
+
+    _inst_sv 'squid'
+}
+
+package_ufw-runscripts() {
+    pkgdesc="daemontools-style runscript for ufw"
+    depends=('ufw')
+
+    _inst_sv 'ufw'
+}
+
+package_vsftpd-runscripts() {
+    pkgdesc="daemontools-style runscript for vsftpd"
+    depends=('vsftpd')
+
+    _inst_sv 'vsftpd'
+}
+
+package_tor-runscripts() {
+    pkgdesc="daemontools-style runscript for tor"
+    depends=('tor')
+
+    _inst_sv 'tor'
+}
+
+package_syncthing-runscripts() {
+    pkgdesc="daemontools-style runscript for syncthing"
+    depends=('syncthing')
+
+    _inst_sv 'relaysrv'
+    _inst_logsv 'relaysrv'
+
+    sed -e 's|-u relaysrv|-u syncthing-relaysrv|g' -i "$pkgdir/etc/sv/relaysrv/run"
+}
+
+package_vnstat-runscripts() {
+    pkgdesc="daemontools-style runscript for vnstat"
+    depends=('vnstat')
+
+    _inst_sv 'vnstatd'
+}
+
+package_unbound-runscripts() {
+    pkgdesc="daemontools-style runscript for unbound"
+    depends=('unbound')
+
+    _inst_sv 'unbound'
+}
+
+#package_cpupower-runscripts() {
+#    pkgdesc="daemontools-style runscript for cpupower"
+#    depends=('cpupower')
+#    backup=('etc/conf.d/cpupower')
+
+#    _inst_confd 'cpupower'
+#    _inst_initd 'cpupower'
+#}
+
+package_connman-runscripts() {
+    pkgdesc="daemontools-style runscript for connman"
+    depends=('connman')
+
+    _inst_sv 'connman'
+}
+
+package_fcron-runscripts() {
+    pkgdesc="daemontools-style runscript for fcron"
+    depends=('fcron')
+    groups=('runscripts-misc')
+    provides=('runscripts-cron')
+    conflicts=('cronie' 'cronie-runscripts' 'systemd-sysvcompat')
+
+    _inst_sv 'fcron'
+}
+
+package_rsyslog-runscripts() {
+    pkgdesc="daemontools-style runscript for rsyslog"
+    depends=('rsyslog')
+
+    _inst_sv 'rsyslog'
+}
+
+package_salt-runscripts() {
+    pkgdesc="daemontools-style runscript for salts"
+    depends=('salt')
+
+    for f in salt-master salt-minion salt-syndic salt-api;do
+        _inst_sv $f
+    done
+}
+
+package_thermald-runscripts() {
+    pkgdesc="daemontools-style runscript for thermald"
+    depends=('dbus-runscripts' 'thermald')
+
+    _inst_sv 'thermald'
+}
+
+#package_xe-guest-utilities-runscripts() {
+#    pkgdesc="daemontools-style runscript for xe-guest-utilities"
+#    depends=('xe-guest-utilities')
+#
+#    _inst_initd 'xe-daemon'
+#}
+
+package_virtualbox-guest-utils-runscripts() {
+    pkgdesc="daemontools-style runscript for virtualbox-guest-utils"
+    depends=('virtualbox-guest-utils')
+
+    _inst_sv 'vboxservice'
+}
+
+package_boinc-runscripts() {
+    pkgdesc="daemontools-style runscript for boinc"
+    depends=('boinc')
+    backup=('etc/sv/boinc/conf')
+
+    _inst_sv 'boinc'
+}
+
+package_at-runscripts() {
+    pkgdesc="daemontools-style runscript for at"
+    depends=('at')
+
+    _inst_sv 'at'
+}
+
+package_cgmanager-runscripts() {
+    pkgdesc="daemontools-style runscript for cgmanager"
+    depends=('cgmanager')
+
+    _inst_sv 'cgmanager'
+}
+
+package_libvirt-runscripts() {
+    pkgdesc="daemontools-style runscript for libvirt"
+    depends=('libvirt')
+
+    _inst_sv 'libvirtd'
+    _inst_logsv 'libvirtd'
+}
+
+package_jenkins-runscripts() {
+    pkgdesc="daemontools-style runscript for jenkins"
+    depends=('jenkins')
+    _inst_sv 'jenkins'
+
+}
+
+package_espeakup-runscripts() {
+    pkgdesc="daemontools-style runscript for espeakup"
+    depends=('espeakup')
+#     optdepends=('alsa-utils-runscripts: alsa support')
+
+    _inst_sv 'espeakup'
+}
+
+package_tlp-runscripts() {
+    pkgdesc="daemontools-style runscript for tlp"
+    depends=('tlp')
+
+    _inst_sv 'tlp'
+}
+
+package_bumblebee-runscripts() {
+    pkgdesc="daemontools-style runscript for bumblebee"
+    depends=('bumblebee')
+
+    _inst_sv 'bumblebee'
+}
+
+package_znc-runscripts() {
+    pkgdesc="daemontools-style runscript for ZNC"
+    depends=('znc')
+
+    _inst_sv 'znc'
+}
+
+package_ddclient-runscripts() {
+    pkgdesc="daemontools-style runscript for ddclient"
+    depends=('ddclient')
+
+    _inst_sv 'ddclient'
+}
+
+package_apcupsd-runscripts() {
+    pkgdesc="daemontools-style runscript for apcupsd"
+    depends=('apcupsd')
+
+    _inst_sv 'apcupsd'
+}
+
+package_sshguard-runscripts() {
+    pkgdesc="daemontools-style runscript for SSHGuard"
+    depends=('sshguard' 'socklog' 'iptables-runscripts')
+
+    _inst_sv 'sshguard-socklog'
+}
+
+package_redis-runscripts() {
+    pkgdesc="daemontools-style runscript for redis"
+    depends=('redis')
+
+    _inst_sv 'redis'
+}
+
+package_dnscrypt-proxy-runscripts() {
+    pkgdesc="daemontools-style runscript for dnscrypt-proxy"
+    depends=('dnscrypt-proxy')
+
+    _inst_sv 'dnscrypt-proxy'
+    _inst_logsv 'dnscrypt-proxy'
+
+    sed -e 's|dnscrypt_proxy|dnscrypt|g' \
+        -i "${pkgdir}/etc/sv/dnscrypt-proxy/log/run"
+}
+
+#package_gitlab-runscripts() {
+#    pkgdesc="daemontools-style runscript for gitlabs"
+#    depends=('gitlab')
+#
+#    _inst_confd 'gitlab-ci-multi-runner'
+#    _inst_initd 'gitlab-ci-multi-runner'
+#    _inst_confd 'gitlab-gitaly'
+#    _inst_initd 'gitlab-gitaly'
+#    _inst_confd 'gitlab-pages'
+#    _inst_initd 'gitlab-pages'
+#    _inst_confd 'gitlab-sidekiq'
+#    _inst_initd 'gitlab-sidekiq'
+#    _inst_confd 'gitlab-unicorn'
+#    _inst_initd 'gitlab-unicorn'
+#    _inst_confd 'gitlab-workhorse'
+#    _inst_initd 'gitlab-workhorse'
+#}
+
+package_grafana-runscripts() {
+    pkgdesc="daemontools-style runscript for grafana"
+    depends=('grafana')
+
+    _inst_sv 'grafana'
+
+    sed -e 's|_grafana|grafana|g' \
+        -i "${pkgdir}/etc/sv/grafana/run"
+}
+
+package_fwknop-runscripts() {
+    pkgdesc="daemontools-style runscript for fwknop"
+    depends=('fwknop')
+
+    _inst_sv 'fwknopd'
+}
+
+package_prometheus-runscripts() {
+    pkgdesc="daemontools-style runscript for prometheus"
+    depends=('prometheus')
+
+    _inst_sv 'prometheus'
+
+    sed -e 's|_prometheus|prometheus|g' \
+        -i "${pkgdir}/etc/sv/prometheus/run"
+}
+
+package_docker-runscripts() {
+    pkgdesc="daemontools-style runscript for docker"
+    depends=('docker')
+
+    _inst_sv 'docker'
+    _inst_logsv 'docker'
+}
+
+package_rng-tools-runscripts() {
+    pkgdesc="daemontools-style runscript for rng-tools"
+    depends=('rng-tools')
+
+    _inst_sv 'rngd'
+}
+
+package_toxcore-runscripts() {
+    pkgdesc="daemontools-style runscript for tox"
+    depends=('toxcore')
+
+    _inst_sv 'toxbootstrapd'
+
+    sed -e "s|toxbootstrapd|tox-bootstrapd|g" -i "$pkgdir/etc/sv/toxbootstrapd/run"
+}
+
+package_pdnsd-runscripts() {
+    pkgdesc="daemontools-style runscript for pdnsd"
+    depends=('pdnsd')
+
+    _inst_sv 'pdnsd'
+}
+
+package_dovecot-runscripts() {
+    pkgdesc="daemontools-style runscript for dovecot"
+    depends=('pdnsd')
+
+    _inst_sv 'dovecot'
+}
+
+sha256sums=('a1ea4a9c341a8a9891b20c89b9a404b87a0508c8585e39b1a9e96873823a3809'
+            '2bbeb3559b673f9e33b59b68ce4e55ea5309bf9706bb3b9a892f239e027b3b54'
+            '1c42d40e94b3dc91ee2a77672fd360503ff9ea988fcec6a46e21a7da6921e774'
+            '769e088fcffc08bec605fb9c4e192c395884c24ff98614f383334e22d6fbdfaf'
+            '09925663d47d21d3040c371f70bdd559d004b10158c877b97adfc15c0ad766a4'
+            'e84314a41de19b8f506600c7da9ca3b9aefc5e603bff0ea0d96dcfaa37bbfed8'
+            '5cb2368923b02c24d89a3a60ee5ebca41dfe60c975129d220f2f792529cc5731'
+            'bc71f18b949e684213fd29096ba176accdca3213769d88e5daea638cabf5a316'
+            'ae62bcc33fd7fa91aaca0eb709932c8b3add5a279ac82dd43cfbb711bdb198dd'
+            'c6bbf1ec4d6c76b35fa481994bc0da1898d7d3a869d8406c4ab562db0212133d'
+            '60157d1a20cfbbe22b23b2f6f2307435ef1684cb3e2ccad04926c22f8d4d7ba9'
+            '7eeafe0e92918c7595333d346ba1bece66a33364b843bbf8015ae607a22e47f2'
+            '15fb0087aa68201b46cd80a94523e1912094b426e265e26b1f25373c38d2146d'
+            '6b1bdf80211964f20c3ac7c17461d2dc00680b75e90000f50f713ba9f9d19177'
+            '79b76c3010b182aa9f7d17062b7b5e705157b19386e252967bf795c0113ec17c'
+            '1ead1dd0b2e1a77d7dce1e48eef319548454db47c7e5a8a255e0cedf7a6164a6'
+            '31911b3ae4dec76c0c36b7a6998e53b77f00cfa9a3ec8548033b284746385b36'
+            '8f2c35264b758ef13bd19e68ba5d40fb81e524e1614499669a0a9067c2ecba30'
+            'ee2153404bcfe8b1d284bd0f9d4e74de778964f10bbab97bf7b960dd7daf0e10'
+            '93733b084fc27c708679716e4ee5253c8b74ceb70b214cc28a91cf0fa9943e25'
+            '0766addd29d9237d363be3b6d92ca6725a5561f2b596e078fa07168aa4159c4f'
+            '677fecc601ce7ab64898b38d0f3e7d63beb9cf72f1380139b1316b9f600cee70'
+            'fd8514f4741e4ca7a46c4bd0e4614c6906c5d84589515cf554977dcc27d5378e'
+            '3cf87795872b701f5de7518f961b2253ce368df273283c3959c2b1ab4cb991df'
+            'd98ae07db9ab328341e77ebd34f0a60f368d59c286193db034a06a8e1e977936'
+            '35d65b0576f9a484e95c32a1bdd2fe0e31cd63009dcb36b418f678d4ed102b47'
+            '25105a39ccf4d1039de03be9278821f09a8bba31174975b11febc8dc7c3e501a'
+            '722cc4bf20cade1af192dbedbc559f87f40546b9883cc1f0d278e0c2ded8d8d9'
+            '83b90c123205da8d4aadd3e761691bec25204109544e654f1d4cab659ed35537'
+            '6faf5951862d0b93a86d4a9a191ea7112f7693093bfe5d6dbc36e66331493455'
+            '6db3f1cedfe7d89d08514be052c45a4276b172263a368d3a25c11f97bc6777bb'
+            'e2051cb31b115d5225090a7d5298c21329e5f13498ce9347d89ae4fb6320cb03'
+            '5d2c6d28d292c2dbc5cfa898add9ec9c10fa92cd8ce3b678b431feb5afc868e5'
+            'f30855ddbdec2ce512388a849900d76817013125b82325f6b0b6c68699d4fc9a'
+            'df264bf678679bc83f2c387ec2a90eb4dba90511d2e161c78e624371b114c233'
+            'd361bf15b6bb61cbe74cee03390a6801bf853b31529263ae7f9dc31cecadbbfb'
+            'b0712b3c2a41d4b90da91f41c778e2647f9b8cd60078a3d0704b4a201933104f'
+            '5bd5cb8b7cad74bb458f8c88c04d63dab8cd6114e543e804119643da414f27dc'
+            'df2290d8e9bd9fa57cf80143758d8524f61af81a7e6197fc0678cf4067df3c2a'
+            '40d30177e03f43f7580188e801f91e79c4c30fba032c084322b26eb9c21dfd4e'
+            'fdb34321691aa5fbe78ea5d93f1cca6ad170fb7f4e4984a4da21c497b8fb53ea'
+            '4215ad5f27b67473937df6312969468fc5ae53f16f1dfee4cfef4c8a45cf31c6'
+            'eeb1579a339e5712d192c7c4aab96d532a1b55ec9aa18161460eb5e291ebbd16'
+            'cb9b177b3995fbc66d709af843876c699f834805853940f964b34cbb1edd2301'
+            'bf272d9b74975185baf9d21866270a765f6c9248e48fa40abde5816e7f1cacc8'
+            '8f4a778fb697ca1287a2377a919a1fabfc3a324245decac8474f6c967561937d'
+            '82141c1247503b8c30aba1846816530d67837805db8badb660ca6b84bdf42f17'
+            'eb98eb062122a0ae15f6ca070466b0c8da1cb4582fc4f9b07ccb9779af7125bb'
+            'b6ad364c97a317773ee619e979b41787d48681895f45f6c09232f1be1c753a3e'
+            '6043901d86026383e024a61563ae1fb683b82836a4d29670ed79a2022176342e'
+            '172109457d290780c41cba205c232e4851aaa894e76538890115885b70cf1e0b'
+            '71f137d16c1ac4c87c4b8d623f27dbfe247bfee35321fc314b8e9f786492987a'
+            '0a453a13383d6a57a94a7c221e376e2599f833ac6935752591aa04610ba2015b'
+            'e446480c35f08e98dee6f31820237e1655e54f586e89315a02e1b83e66a8fd00'
+            '456a533453bc6349d72907a478ed3d01c0c37ec74e7f5683953507ca9a7c1b57')
