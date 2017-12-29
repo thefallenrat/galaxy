@@ -1,33 +1,35 @@
-# $Id$
-# Maintainer: Sébastien Luttringer
+# Maintainer: Rafli Akmal <thefallenrat@artixlinux.org>
+# Contributor: Sébastien Luttringer
 # Contributor: Ionut Biru <ibiru@archlinux.org>
 
 pkgbase=virtualbox-modules-artix
 pkgname=('virtualbox-host-modules-artix' 'virtualbox-guest-modules-artix')
 pkgver=5.2.4
-pkgrel=3
+pkgrel=4
 _linux_major=4
 _linux_minor=14
+_linux_revision=10
+_linux_rel=1
 arch=('x86_64')
 url='http://virtualbox.org'
 license=('GPL')
-makedepends=("linux>=${_linux_major}.${_linux_minor}"
+depends=("linux>=${_linux_major}.${_linux_minor}.${_linux_revision}"
+         "linux<${_linux_major}.$((_linux_minor+1))")
+makedepends=("linux>=${_linux_major}.${_linux_minor}.${_linux_revision}"
              "linux<${_linux_major}.$((_linux_minor+1))"
-             "linux-headers>=${_linux_major}.${_linux_minor}"
+             "linux-headers>=${_linux_major}.${_linux_minor}.${_linux_revision}"
              "linux-headers<${_linux_major}.$((_linux_minor+1))"
              "virtualbox-host-dkms>=$pkgver"
              "virtualbox-guest-dkms>=$pkgver")
 
 _extramodules=extramodules-${_linux_major}.${_linux_minor}-ARTIX
+_kernver="${_linux_major}.${_linux_minor}.${_linux_revision}-${_linux_rel}-ARTIX"
 
 package_virtualbox-host-modules-artix(){
-  _kernver="$(cat /usr/lib/modules/$_extramodules/version)"
   pkgdesc='Virtualbox host kernel modules for Artix Kernel'
-  depends=("linux>=${_linux_major}.${_linux_minor}"
-           "linux<${_linux_major}.$((_linux_minor+1))")
   replaces=('virtualbox-modules' 'virtualbox-host-modules')
   conflicts=('virtualbox-modules' 'virtualbox-host-modules'
-			 'virtualbox-host-dkms')
+             'virtualbox-host-dkms')
   provides=('VIRTUALBOX-HOST-MODULES')
 
   cd "/var/lib/dkms/vboxhost/${pkgver}_OSE/$_kernver/$CARCH/module"
@@ -42,11 +44,8 @@ package_virtualbox-host-modules-artix(){
 }
 
 package_virtualbox-guest-modules-artix(){
-  _kernver="$(cat /usr/lib/modules/$_extramodules/version)"
   pkgdesc='Virtualbox guest kernel modules for Artix Kernel'
   license=('GPL')
-  depends=("linux>=${_linux_major}.${_linux_minor}"
-           "linux<${_linux_major}.$((_linux_minor+1))")
   replaces=('virtualbox-archlinux-modules' 'virtualbox-guest-modules')
   conflicts=('virtualbox-archlinux-modules' 'virtualbox-guest-modules'
              'virtualbox-guest-dkms')
