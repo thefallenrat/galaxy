@@ -5,10 +5,10 @@
 
 pkgname=socklog
 pkgver=2.1.0
-pkgrel=2
+pkgrel=3
 pkgdesc="Small and secure syslogd replacement for use with Runit"
 arch=('i686' 'x86_64')
-depends=('glibc' 'runit' 'bash')
+depends=('glibc' 'runit')
 makedepends=('make')
 url="http://smarden.org/socklog/"
 license=('BSD')
