@@ -26,7 +26,7 @@ pkgname=(
 #         'unbound-openrc'
 #         'cpupower-openrc'
 #         'connman-openrc'
-#         'fcron-openrc'
+        'fcron-openrc'
 #         'rsyslog-openrc'
 #         'salt-openrc'
 #         'thermald-openrc'
@@ -54,7 +54,7 @@ pkgname=(
 #         'rng-tools-openrc'
 #         'toxcore-openrc'
 #         'pdnsd-openrc'
-          'dovecot-openrc'
+#           'dovecot-openrc'
 )
 pkgver=20171110
 pkgrel=1
@@ -342,7 +342,7 @@ package_connman-openrc() {
 package_fcron-openrc() {
     pkgdesc="OpenRC fcron init script"
     depends=('openrc' 'fcron')
-    groups=('openrc-misc')
+#     groups=('openrc-misc')
     provides=('openrc-cron')
     conflicts=('cronie' 'cronie-openrc' 'systemd-sysvcompat')
 
@@ -720,8 +720,8 @@ sha256sums=('3755d4eb8bb64a1304e5defedb949305ac550565da36fe4f94d5f31beee821ba'
             '759ef54c0f54a27023020ff8da7811b38459a194d7d75d15ea88f7609b2a013c'
             '8c68e29dc88c8ad99b9212a448d313d1406ef02c7638398b2e48ea1ca8aa937b'
             '94257e625ee8c0212dd8afdaa9871796f9944a3ee68641cbde902a1a8a9c6fa9'
-            '11d635f9a504899e450e8f742952b3a736a5fc7da61eeff83eba416f3618c304'
-            '48ea1cc31b5c13d3b4fd04cf1b16a8b6a565e5ec60a639a0290459874d3495a9'
+            '38ef436a17975031974166b32fe98ccb78e13c901a753d0e1af5c73b8e1831be'
+            'f7dd88344479ebaa945eb9f01f14649e71ebfdba1ac56eeed7a46ea6c43c1f0a'
             '50c1ed3272e056ca74242e5ff395785e3bec78ac1ea403aa4a2a5e72c6f57609'
             '0b93ba53d557fbf603b50f6d78eb2c4415b9a79f056142b6edf4a63fc6612d6e'
             '32ff7ecc80e74625c3c8202441fd4358205d673361dc9923b1d8f96745c7767e'
