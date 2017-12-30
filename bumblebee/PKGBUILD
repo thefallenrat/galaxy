@@ -6,7 +6,7 @@ pkgver=3.2.1
 pkgrel=16
 pkgdesc="NVIDIA Optimus support for Linux through VirtualGL"
 arch=('x86_64')
-depends=('virtualgl' 'glib2' 'mesa-libgl' 'libsd')
+depends=('virtualgl' 'glib2' 'mesa-libgl' 'libbsd')
 makedepends=('help2man')
 optdepends=('bbswitch: switch on/off discrete card'
             'nvidia: NVIDIA kernel driver'
