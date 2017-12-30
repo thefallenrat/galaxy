@@ -15,8 +15,8 @@ url="http://www.realtek.com.tw"
 license=("GPL")
 arch=('x86_64')
 depends=('glibc'
-         "linux->=${_linux_major}.${_linux_minor}.${_linux_revision}"
-         "linux-<${_linux_major}.$((_linux_minor+1))")
+         "linux>=${_linux_major}.${_linux_minor}.${_linux_revision}"
+         "linux<${_linux_major}.$((_linux_minor+1))")
 makedepends=("linux-headers>=${_linux_major}.${_linux_minor}.${_linux_revision}"
              "linux-headers<${_linux_major}.$((_linux_minor+1))")
 source=(https://github.com/mtorromeo/r8168/archive/$pkgver/$pkgname-$pkgver.tar.gz)
