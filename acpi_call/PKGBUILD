@@ -1,0 +1,70 @@
+# Maintainer: Rafli Akmal <thefallenrat@artixlinux.org>
+# Contributor: Maxime Gauduin <alucryd@archlinux.org>
+# Contributor: mortzu <me@mortzu.de>
+# Contributor: fnord0 <fnord0@riseup.net>
+
+pkgbase=acpi_call
+pkgname=(acpi_call acpi_call-dkms)
+pkgver=1.1.0
+pkgrel=92
+_linux_major=4
+_linux_minor=14
+_linux_revision=11
+_linux_rel=1
+pkgdesc='A linux kernel module that enables calls to ACPI methods through /proc/acpi/call'
+url='https://github.com/mkottman/acpi_call'
+arch=('x86_64')
+license=('GPL')
+depends=("linux>=${_linux_major}.${_linux_minor}.${_linux_revision}"
+         "linux<${_linux_major}.$((_linux_minor+1))")
+makedepends=("linux-headers>=${_linux_major}.${_linux_minor}.${_linux_revision}"
+             "linux-headers<${_linux_major}.$((_linux_minor+1))")
+source=("acpi_call-${pkgver}.tar.gz::https://github.com/mkottman/acpi_call/archive/v${pkgver}.tar.gz"
+        dkms.conf)
+sha256sums=('d0d14b42944282724fca76f57d598eed794ef97448f387d1c489d85ad813f2f0'
+            '32e6ea6523b13132c6c7838bba7fbf3d040ba2d35a892c2c356245612720df8a')
+
+_extramodules=extramodules-${_linux_major}.${_linux_minor}-ARTIX
+_kernver="${_linux_major}.${_linux_minor}.${_linux_revision}-${_linux_rel}-ARTIX"
+
+prepare() {
+  cd $pkgbase-$pkgver
+
+  # Fix build with Linux >= 3.17
+  sed -i 's|acpi/acpi.h|linux/acpi.h|' acpi_call.c
+
+  # Fix build with Linux >= 4.12
+  sed -i 's|asm/uaccess.h|linux/uaccess.h|' acpi_call.c
+}
+
+build() {
+  cd $pkgbase-$pkgver
+  make KVERSION="${_kernver}"
+}
+
+package_acpi_call() {
+  cd $pkgbase-$pkgver
+  install -Dt "$pkgdir/usr/lib/modules/$_extramodules" -m644 acpi_call.ko
+  find "$pkgdir" -name '*.ko' -exec gzip -n {} +
+
+  echo acpi_call | install -Dm644 /dev/stdin "$pkgdir/usr/lib/modules-load.d/acpi_call.conf"
+
+  mkdir -p "$pkgdir/usr/share/acpi_call"
+  cp -t "$pkgdir/usr/share/acpi_call" -dr --no-preserve=ownership examples support
+}
+
+package_acpi_call-dkms() {
+  depends=(dkms)
+  provides=("acpi_call=$pkgver-$pkgrel")
+  conflicts=(acpi_call)
+
+  cd $pkgbase-$pkgver
+  install -Dt "$pkgdir/usr/src/$pkgbase-$pkgver" -m644 Makefile acpi_call.c ../dkms.conf
+
+  echo acpi_call | install -Dm644 /dev/stdin "$pkgdir/usr/lib/modules-load.d/acpi_call.conf"
+
+  mkdir -p "$pkgdir/usr/share/acpi_call"
+  cp -t "$pkgdir/usr/share/acpi_call" -dr --no-preserve=ownership examples support
+}
+
+# vim:set ts=2 sw=2 et:
