@@ -6,52 +6,53 @@ _sed_args=(-e 's|/var/run|/run|g' -e 's|/usr/sbin|/usr/bin|g' -e 's|/opt/bin|/us
 
 pkgbase=runscripts-galaxy
 pkgname=(
-        'acpid-runscripts'
-        'autofs-runscripts'
-        'hostapd-runscripts'
-        'openntpd-runscripts'
-        'polipo-runscripts'
-        'privoxy-runscripts'
-        'squid-runscripts'
-        'ufw-runscripts'
-        'vsftpd-runscripts'
-        'tor-runscripts'
-        'syncthing-runscripts'
-        'vnstat-runscripts'
-        'unbound-runscripts'
+#        'acpid-runscripts'
+#        'autofs-runscripts'
+#        'hostapd-runscripts'
+#        'openntpd-runscripts'
+#        'polipo-runscripts'
+#        'privoxy-runscripts'
+#        'squid-runscripts'
+#        'ufw-runscripts'
+#        'vsftpd-runscripts'
+#        'tor-runscripts'
+#        'syncthing-runscripts'
+#        'vnstat-runscripts'
+#        'unbound-runscripts'
 #        'cpupower-runscripts'
-        'connman-runscripts'
-        'fcron-runscripts'
-        'rsyslog-runscripts'
-        'salt-runscripts'
-        'thermald-runscripts'
+#        'connman-runscripts'
+#        'fcron-runscripts'
+#        'rsyslog-runscripts'
+#        'salt-runscripts'
+#        'thermald-runscripts'
 #        'xe-guest-utilities-runscripts'
-        'boinc-runscripts'
-        'at-runscripts'
-        'libvirt-runscripts'
-        'cgmanager-runscripts'
+#        'boinc-runscripts'
+#        'at-runscripts'
+#        'libvirt-runscripts'
+#        'cgmanager-runscripts'
 #        'virtualbox-guest-utils-runscripts'
-        'jenkins-runscripts'
-        'espeakup-runscripts'
-        'tlp-runscripts'
-        'bumblebee-runscripts'
-        'znc-runscripts'
-        'ddclient-runscripts'
-        'apcupsd-runscripts'
+#        'jenkins-runscripts'
+#        'espeakup-runscripts'
+#        'tlp-runscripts'
+#        'bumblebee-runscripts'
+#        'znc-runscripts'
+#        'ddclient-runscripts'
+#        'apcupsd-runscripts'
 #        'sshguard-runscripts'
-        'redis-runscripts'
-        'dnscrypt-proxy-runscripts'
+#        'redis-runscripts'
+#        'dnscrypt-proxy-runscripts'
 #        'gitlab-runscripts'
-        'grafana-runscripts'
-        'fwknop-runscripts'
-        'prometheus-runscripts'
-        'docker-runscripts'
-        'rng-tools-runscripts'
-        'toxcore-runscripts'
-        'pdnsd-runscripts'
-        'dovecot-runscripts'
+#        'grafana-runscripts'
+#        'fwknop-runscripts'
+#        'prometheus-runscripts'
+#        'docker-runscripts'
+#        'rng-tools-runscripts'
+#        'toxcore-runscripts'
+#        'pdnsd-runscripts'
+#        'dovecot-runscripts'
+        'lxdm-runscripts'
 )
-pkgver=20180105
+pkgver=20180109
 pkgrel=1
 pkgdesc="daemontools-style service script for galaxy repository"
 arch=('any')
@@ -130,6 +131,7 @@ source=(
         "toxbootstrapd.run::${_url}/toxcore/files/toxbootstrapd/run"
         "pdnsd.run"
         "dovecot.run::${_url}/dovecot/files/dovecot/run"
+        "lxdm.run::${_url}/lxdm/files/lxdm/run"
 )
 
 pkgver() {
@@ -508,6 +510,13 @@ package_dovecot-runscripts() {
     _inst_sv 'dovecot'
 }
 
+package_lxdm-runscripts() {
+    pkgdesc="daemontools-style runscript for lxdm"
+    depends=('lxdm')
+
+    _inst_sv 'lxdm'
+}
+
 sha256sums=('a1ea4a9c341a8a9891b20c89b9a404b87a0508c8585e39b1a9e96873823a3809'
             '2bbeb3559b673f9e33b59b68ce4e55ea5309bf9706bb3b9a892f239e027b3b54'
             '1c42d40e94b3dc91ee2a77672fd360503ff9ea988fcec6a46e21a7da6921e774'
@@ -562,4 +571,5 @@ sha256sums=('a1ea4a9c341a8a9891b20c89b9a404b87a0508c8585e39b1a9e96873823a3809'
             '71f137d16c1ac4c87c4b8d623f27dbfe247bfee35321fc314b8e9f786492987a'
             '0a453a13383d6a57a94a7c221e376e2599f833ac6935752591aa04610ba2015b'
             'e446480c35f08e98dee6f31820237e1655e54f586e89315a02e1b83e66a8fd00'
-            '456a533453bc6349d72907a478ed3d01c0c37ec74e7f5683953507ca9a7c1b57')
+            '456a533453bc6349d72907a478ed3d01c0c37ec74e7f5683953507ca9a7c1b57'
+            'ad7755e96418dd5a89999083d34458b4e82a4e71cf520adcdcf7ae22b33941f3')
