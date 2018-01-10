@@ -20,7 +20,7 @@ pkgname=(
 #        'vnstat-runscripts'
 #        'unbound-runscripts'
 #        'cpupower-runscripts'
-#        'connman-runscripts'
+        'connman-runscripts'
 #        'fcron-runscripts'
 #        'rsyslog-runscripts'
 #        'salt-runscripts'
@@ -50,9 +50,9 @@ pkgname=(
 #        'toxcore-runscripts'
 #        'pdnsd-runscripts'
 #        'dovecot-runscripts'
-        'lxdm-runscripts'
+#        'lxdm-runscripts'
 )
-pkgver=20180109
+pkgver=20180110
 pkgrel=1
 pkgdesc="daemontools-style service script for galaxy repository"
 arch=('any')
@@ -272,7 +272,7 @@ package_connman-runscripts() {
     pkgdesc="daemontools-style runscript for connman"
     depends=('connman')
 
-    _inst_sv 'connman'
+    _inst_sv 'connmand'
 }
 
 package_fcron-runscripts() {
