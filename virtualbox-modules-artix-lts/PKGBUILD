@@ -6,10 +6,10 @@
 pkgbase=virtualbox-modules-artix-lts
 pkgname=('virtualbox-host-modules-artix-lts' 'virtualbox-guest-modules-artix-lts')
 pkgver=5.2.4
-pkgrel=6
+pkgrel=7
 _linux_major=4
 _linux_minor=9
-_linux_revision=75
+_linux_revision=76
 arch=('x86_64')
 url='http://virtualbox.org'
 license=('GPL')
