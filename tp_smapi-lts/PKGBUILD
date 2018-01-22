@@ -11,10 +11,10 @@
 pkgname=tp_smapi-lts
 _pkgname=tp-smapi
 pkgver=0.42
-pkgrel=25.4
+pkgrel=26
 _linux_major=4
 _linux_minor=9
-_linux_revision=75
+_linux_revision=77
 _linux_rel=1
 pkgdesc="Modules for ThinkPad's SMAPI functionality"
 arch=('x86_64')
