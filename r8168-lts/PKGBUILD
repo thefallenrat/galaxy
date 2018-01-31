@@ -4,10 +4,10 @@
 pkgname=r8168-lts
 _pkgname=r8168
 pkgver=8.045.08
-pkgrel=9
+pkgrel=11
 _linux_major=4
-_linux_minor=9
-_linux_revision=78
+_linux_minor=14
+_linux_revision=16
 _linux_rel=1
 pkgdesc="A kernel module for Realtek 8168 network cards for linux-lts"
 url="http://www.realtek.com.tw"
