@@ -9,7 +9,7 @@ pkgver=1.1.0
 pkgrel=97
 _linux_major=4
 _linux_minor=15
-#_linux_revision=15
+_linux_revision=0
 _linux_rel=1
 pkgdesc='A linux kernel module that enables calls to ACPI methods through /proc/acpi/call'
 url='https://github.com/mkottman/acpi_call'
@@ -25,8 +25,7 @@ sha256sums=('d0d14b42944282724fca76f57d598eed794ef97448f387d1c489d85ad813f2f0'
             '32e6ea6523b13132c6c7838bba7fbf3d040ba2d35a892c2c356245612720df8a')
 
 _extramodules=extramodules-${_linux_major}.${_linux_minor}-ARTIX
-#_kernver="${_linux_major}.${_linux_minor}.${_linux_revision}-${_linux_rel}-ARTIX"
-_kernver="${_linux_major}.${_linux_minor}-${_linux_rel}-ARTIX"
+_kernver="${_linux_major}.${_linux_minor}.${_linux_revision}-${_linux_rel}-ARTIX"
 
 prepare() {
   cd $pkgbase-$pkgver
