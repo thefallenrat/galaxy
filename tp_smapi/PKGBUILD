@@ -14,7 +14,7 @@ pkgver=0.42+7+g76c5120
 pkgrel=1
 _linux_major=4
 _linux_minor=15
-#_linux_revision=15
+_linux_revision=0
 _linux_rel=1
 pkgdesc="Modules for ThinkPad's SMAPI functionality"
 arch=('x86_64')
@@ -29,8 +29,7 @@ source=("git+https://github.com/evgeni/tp_smapi#commit=$_commit")
 sha256sums=('SKIP')
 
 _extradir="/usr/lib/modules/extramodules-${_linux_major}.${_linux_minor}-ARTIX"
-#_kernver="${_linux_major}.${_linux_minor}.${_linux_revision}-${_linux_rel}-ARTIX"
-_kernver="${_linux_major}.${_linux_minor}-${_linux_rel}-ARTIX"
+_kernver="${_linux_major}.${_linux_minor}.${_linux_revision}-${_linux_rel}-ARTIX"
 
 pkgver() {
   cd $pkgname
