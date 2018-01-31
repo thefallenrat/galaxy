@@ -8,7 +8,7 @@ pkgver=8.045.08
 pkgrel=25
 _linux_major=4
 _linux_minor=15
-#_linux_revision=15
+_linux_revision=0
 _linux_rel=1
 pkgdesc="A kernel module for Realtek 8168 network cards"
 url="http://www.realtek.com.tw"
@@ -23,8 +23,7 @@ source=(https://github.com/mtorromeo/r8168/archive/$pkgver/$pkgname-$pkgver.tar.
 sha256sums=('18161cb72fc872a9aed194514f7b8fb8b255b6fa6ed3d2dd459700eaad575f31')
 
 _extramodules=extramodules-${_linux_major}.${_linux_minor}-ARTIX
-#_kernver="${_linux_major}.${_linux_minor}.${_linux_revision}-${_linux_rel}-ARTIX"
-_kernver="${_linux_major}.${_linux_minor}-${_linux_rel}-ARTIX"
+_kernver="${_linux_major}.${_linux_minor}.${_linux_revision}-${_linux_rel}-ARTIX"
 
 build() {
 	msg2 "Kernel = $_kernver"
