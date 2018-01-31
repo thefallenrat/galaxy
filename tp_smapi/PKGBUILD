@@ -23,7 +23,8 @@ license=('GPL')
 depends=("linux>=${_linux_major}.${_linux_minor}"
          "linux<${_linux_major}.$((_linux_minor+1))")
 makedepends=("linux-headers>=${_linux_major}.${_linux_minor}"
-             "linux-headers<${_linux_major}.$((_linux_minor+1))")
+             "linux-headers<${_linux_major}.$((_linux_minor+1))"
+             "git")
 _commit=76c5120f7be4880cf2c6801f872327e4e70c449f  # master
 source=("git+https://github.com/evgeni/tp_smapi#commit=$_commit")
 sha256sums=('SKIP')
