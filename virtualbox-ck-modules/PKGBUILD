@@ -5,10 +5,10 @@
 pkgbase=(virtualbox-ck-modules)
 pkgname=(virtualbox-ck-host-modules virtualbox-ck-guest-modules)
 pkgver=5.2.6
-pkgrel=2
+pkgrel=3
 _linux_major=4
 _linux_minor=14
-_linux_revision=15
+_linux_revision=16
 _linux_rel=2
 arch=('x86_64')
 url='http://virtualbox.org'
@@ -21,7 +21,6 @@ makedepends=("linux-ck>=${_linux_major}.${_linux_minor}.${_linux_revision}"
              "virtualbox-guest-dkms>=$pkgver" 
              "libelf")
 _extramodules=extramodules-${_linux_major}.${_linux_minor}-ck
-# _kernver="$(cat /usr/lib/modules/${_extramodules}/version)"
 _kernver="${_linux_major}.${_linux_minor}.${_linux_revision}-${_linux_rel}-ck"
 
 #build() {
